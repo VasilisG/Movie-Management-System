@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="moviePriceLabel" max="32767" attributes="0"/>
+                  <Component id="movieTitleLabel" max="32767" attributes="0"/>
+                  <Component id="movieCodeLabel" max="32767" attributes="0"/>
+                  <Component id="customerCodeLabel" max="32767" attributes="0"/>
+                  <Component id="customerPhoneLabel" max="32767" attributes="0"/>
+                  <Component id="customerEmailAddressLabel" max="32767" attributes="0"/>
+                  <Component id="customerAddressLabel" max="32767" attributes="0"/>
+                  <Component id="customerLastNameLabel" max="32767" attributes="0"/>
+                  <Component id="customerFirstNameLabel" pref="160" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="customerLastNameField" max="32767" attributes="0"/>
+                  <Component id="customerAddressField" max="32767" attributes="0"/>
+                  <Component id="customerEmailAddressField" max="32767" attributes="0"/>
+                  <Component id="customerPhoneField" max="32767" attributes="0"/>
+                  <Component id="customerCodeField" max="32767" attributes="0"/>
+                  <Component id="movieCodeField" max="32767" attributes="0"/>
+                  <Component id="movieTitleField" max="32767" attributes="0"/>
+                  <Component id="moviePriceField" pref="256" max="32767" attributes="0"/>
+                  <Component id="customerFirstNameField" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace pref="172" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="closeButton" min="-2" pref="133" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="customerFirstNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="customerFirstNameField" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="customerLastNameLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="customerLastNameField" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="customerAddressLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="customerAddressField" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="customerEmailAddressLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="customerEmailAddressField" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="customerPhoneLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="customerPhoneField" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="customerCodeLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="customerCodeField" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="movieCodeLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="movieCodeField" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="movieTitleLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="movieTitleField" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="moviePriceLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="moviePriceField" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="42" max="32767" attributes="0"/>
+              <Component id="closeButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="customerFirstNameLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Customer first name:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="customerFirstNameField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="customerLastNameLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Customer last name:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="customerLastNameField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="customerAddressLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Address:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="customerAddressField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="customerEmailAddressLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Email address:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="customerEmailAddressField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="customerPhoneLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Phone number:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="customerPhoneField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="customerCodeLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Customer code:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="customerCodeField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="movieCodeLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Movie code:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="movieCodeField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="movieTitleLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Movie title:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="movieTitleField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="moviePriceLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Movie price:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="moviePriceField">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="closeButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Close"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
