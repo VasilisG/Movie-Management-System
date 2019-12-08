@@ -20,8 +20,22 @@ import java.util.logging.Logger;
  * @author Vasilis
  */
 public class MySqlDatabase {
+    
+    private Connection connection;
+    
+    public MySqlDatabase(){
+        try {
+            connection = DriverManager.getConnection(Constants.DATABASE_URL, Constants.USERNAME, Constants.PASSWORD);
+        } catch (SQLException ex) {
+            connection = null;
+        }
+    }
+    
+    public Connection getConnection(){
+        return connection;
+    }
         
-    public static void initDatabase(){
+    public void initDatabase(){
         
         Connection initialConnection = null;
         Statement initialStatement = null;
@@ -34,8 +48,8 @@ public class MySqlDatabase {
             System.out.println("Getting class for name...");
             Class.forName(Constants.DRIVER);
         } catch (ClassNotFoundException ex) {
-            Status.showErrorMessage(Constants.SQL_DRIVER_ERROR);
-            //Status.showErrorMessage(ex.getMessage());
+            //Status.showErrorMessage(Constants.SQL_DRIVER_ERROR);
+            Status.showErrorMessage(ex.getMessage());
             return;
         }
         
@@ -43,8 +57,8 @@ public class MySqlDatabase {
             System.out.println("Setting initial connection...");
             initialConnection = DriverManager.getConnection(Constants.CONNECTION_URL, Constants.USERNAME, Constants.PASSWORD);        
         } catch (SQLException ex){
-            Status.showErrorMessage(Constants.SQL_CONNECTION_ERROR);
-            //Status.showErrorMessage(ex.getMessage());
+            //Status.showErrorMessage(Constants.SQL_CONNECTION_ERROR);
+            Status.showErrorMessage(ex.getMessage());
             return;
         }
          
@@ -52,8 +66,8 @@ public class MySqlDatabase {
             System.out.println("Creating initial statement...");
             initialStatement = initialConnection.createStatement();
         } catch (SQLException ex){
-            Status.showErrorMessage(Constants.SQL_STATEMENT_ERROR);
-            //Status.showErrorMessage(ex.getMessage());
+            //Status.showErrorMessage(Constants.SQL_STATEMENT_ERROR);
+            Status.showErrorMessage(ex.getMessage());
             return;
         }
          
@@ -61,8 +75,8 @@ public class MySqlDatabase {
             System.out.println("Creating database...");
             createDatabase(initialConnection, initialStatement);
         } catch (SQLException ex) {
-            Status.showErrorMessage(Constants.SQL_DATABASE_ERROR);
-            //Status.showErrorMessage(ex.getMessage());
+            //Status.showErrorMessage(Constants.SQL_DATABASE_ERROR);
+            Status.showErrorMessage(ex.getMessage());
             return;
         }
         
@@ -70,8 +84,8 @@ public class MySqlDatabase {
             System.out.println("Creating connection...");
             connection = DriverManager.getConnection(Constants.DATABASE_URL, Constants.USERNAME, Constants.PASSWORD);        
         } catch (SQLException ex){
-            Status.showErrorMessage(Constants.SQL_CONNECTION_ERROR);
-            //Status.showErrorMessage(ex.getMessage());
+            //Status.showErrorMessage(Constants.SQL_CONNECTION_ERROR);
+            Status.showErrorMessage(ex.getMessage());
             return;
         }
         
@@ -79,8 +93,8 @@ public class MySqlDatabase {
             System.out.println("Creating statement...");
             statement = connection.createStatement();
         } catch (SQLException ex){
-            Status.showErrorMessage(Constants.SQL_STATEMENT_ERROR);
-            //Status.showErrorMessage(ex.getMessage());
+            //Status.showErrorMessage(Constants.SQL_STATEMENT_ERROR);
+            Status.showErrorMessage(ex.getMessage());
             return;
         }
         
@@ -88,8 +102,8 @@ public class MySqlDatabase {
             System.out.println("Creating movie table...");
             createMovieTable(connection, statement);
         } catch (SQLException ex){
-            Status.showErrorMessage(Constants.SQL_MOVIE_TABLE_ERROR);
-            //Status.showErrorMessage(ex.getMessage());
+            //Status.showErrorMessage(Constants.SQL_MOVIE_TABLE_ERROR);
+            Status.showErrorMessage(ex.getMessage());
             return;
         }
         
@@ -97,8 +111,8 @@ public class MySqlDatabase {
             System.out.println("Creating customer table...");
             createCustomerTable(connection, statement);
         } catch (SQLException ex){
-            Status.showErrorMessage(Constants.SQL_CUSTOMER_TABLE_ERROR);
-            //Status.showErrorMessage(ex.getMessage());
+            //Status.showErrorMessage(Constants.SQL_CUSTOMER_TABLE_ERROR);
+            Status.showErrorMessage(ex.getMessage());
             return;
         }
         
@@ -106,8 +120,8 @@ public class MySqlDatabase {
             System.out.println("Creating reservation table...");
             createReservationTable(connection, statement);
         } catch (SQLException ex){
-            Status.showErrorMessage(Constants.SQL_RESERVATION_TABLE_ERROR);
-            //Status.showErrorMessage(ex.getMessage());
+            //Status.showErrorMessage(Constants.SQL_RESERVATION_TABLE_ERROR);
+            Status.showErrorMessage(ex.getMessage());
             return;
         }
         
@@ -115,8 +129,8 @@ public class MySqlDatabase {
             System.out.println("Creating transaction table...");
             createTransactionTable(connection, statement);
         } catch (SQLException ex){
-            Status.showErrorMessage(Constants.SQL_TRANSACTION_TABLE_ERROR);
-            //Status.showErrorMessage(ex.getMessage());
+            //Status.showErrorMessage(Constants.SQL_TRANSACTION_TABLE_ERROR);
+            Status.showErrorMessage(ex.getMessage());
             return;
         }
     }
@@ -175,7 +189,7 @@ public class MySqlDatabase {
     
     private static void createTransactionTable(Connection connection, Statement statement) throws SQLException {
         String transactionTableQuery = "CREATE TABLE IF NOT EXISTS transactions"
-                                       + " (id PRIMARY KEY AUTO_INCREMENT,"
+                                       + " (id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,"
                                        + " movie_code VARCHAR(10) NOT NULL,"
                                        + " customer_code VARCHAR(10) NOT NULL,"
                                        + " date DATE NOT NULL)";

@@ -22,8 +22,8 @@ public abstract class EntityHandler {
         this.connection = connection;
     }
     
-    public abstract void insertRecord();
-    public abstract void updateRecord();
-    public abstract void deleteRecord();
+    public abstract void insertRecord(Object obj);
+    public abstract void updateRecord(Object obj);
+    public abstract void deleteRecord(Object obj);
     
 }

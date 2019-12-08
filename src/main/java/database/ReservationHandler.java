@@ -10,6 +10,7 @@ import com.mycompany.moviemanagementsystem.Customer;
 import com.mycompany.moviemanagementsystem.Movie;
 import com.mycompany.moviemanagementsystem.Reservation;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,29 +23,18 @@ import java.util.logging.Logger;
  *
  * @author Vasilis
  */
-public class ReservationHandler extends EntityHandler {
+public class ReservationHandler {
     
-    private static final String tableName = "Reservations";
-    private  Reservation reservation;
+    private Connection connection;
     
-    public ReservationHandler(Connection connection, Reservation reservation){
-        super(connection);
-        this.reservation = reservation;
-    }
-    
-    public Reservation getReservation(){
-        return reservation;
-    }
-    
-    public void setReservation(Reservation reservation){
-        this.reservation = reservation;
+    public ReservationHandler(Connection connection){
+        this.connection = connection;
     }
 
-    @Override
-    public void insertRecord() {
+    public void insertRecord(Reservation reservation) {
        StringBuilder builder = new StringBuilder();
        builder.append("INSERT INTO ");
-       builder.append(tableName + " ");
+       builder.append(Constants.RESERVATION_TABLE_NAME + " ");
        builder.append("VALUES (");
        builder.append(reservation.getCustomer().getCode());
        builder.append(", ");
@@ -56,7 +46,7 @@ public class ReservationHandler extends EntityHandler {
        builder.append(" );");
        
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement");
@@ -64,39 +54,37 @@ public class ReservationHandler extends EntityHandler {
        
     }
 
-    @Override
-    public void updateRecord() {
+    public void updateRecord(Reservation reservation) {
         StringBuilder builder = new StringBuilder();
         builder.append("UPDATE ");
-        builder.append(tableName);
+        builder.append(Constants.RESERVATION_TABLE_NAME);
         builder.append("\n");
         builder.append("SET ");
         builder.append("START_DATE=" + reservation.getStartDate() + ", ");
         builder.append("END_DATE=" + reservation.getEndDate() + "\n");
         
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not prepare statement.");
         }
     }
 
-    @Override
-    public void deleteRecord() {
+    public void deleteRecord(Reservation reservation) {
         StringBuilder builder = new StringBuilder();
-        builder.append("DELETE FROM " + tableName + " \n");
+        builder.append("DELETE FROM " + Constants.RESERVATION_TABLE_NAME + " \n");
         builder.append(";");
         
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
         }
     }
     
-    public ArrayList<Reservation> getReservationsFromDatabase(Connection connection, ArrayList<Movie> movies, ArrayList<Customer> customers){
+    public ArrayList<Reservation> getReservationsFromDatabase(ArrayList<Movie> movies, ArrayList<Customer> customers){
         try {
             ArrayList<Reservation> reservations = new ArrayList<Reservation>();
             Statement statement = connection.createStatement();

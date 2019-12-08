@@ -10,6 +10,7 @@ import com.mycompany.moviemanagementsystem.Customer;
 import com.mycompany.moviemanagementsystem.Movie;
 import com.mycompany.moviemanagementsystem.Transaction;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,35 +23,24 @@ import java.util.logging.Logger;
  *
  * @author Vasilis
  */
-public class TransactionHandler extends EntityHandler{
+public class TransactionHandler {
     
-    private static final String tableName = "Transactions";
-    private Transaction transaction;
+    private Connection connection;
 
-    public TransactionHandler(Connection connection, Transaction transaction) {
-        super(connection);
-        this.transaction = transaction;
-    }
-    
-    public Transaction getTransaction(){
-        return transaction;
-    }
-    
-    public void setTransaction(Transaction transaction){
-        this.transaction = transaction;
+    public TransactionHandler(Connection connection) {
+        this.connection = connection;
     }
 
-    @Override
-    public void insertRecord() {
+    public void insertRecord(Transaction transaction) {
         StringBuilder builder = new StringBuilder();
-        builder.append("INSERT INTO " + tableName + " ");
+        builder.append("INSERT INTO " + Constants.TRANSACTION_TABLE_NAME + " ");
         builder.append("VALUES (");
         builder.append(transaction.getDate() + ", ");
         builder.append(transaction.getCustomer().getCode() + ", ");
         builder.append(transaction.getMovie().getCode() + ")");
         
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
@@ -58,37 +48,35 @@ public class TransactionHandler extends EntityHandler{
         
     }
 
-    @Override
-    public void updateRecord() {
+    public void updateRecord(Transaction transaction) {
         StringBuilder builder = new StringBuilder();
-        builder.append("UPDATE " + tableName + "\n");
+        builder.append("UPDATE " + Constants.TRANSACTION_TABLE_NAME + "\n");
         builder.append("SET ");
         builder.append("DATE=" + transaction.getDate() + ", ");
         builder.append("CUSTOMER_CODE=" + transaction.getCustomer().getCode() + ", ");
         builder.append("MOVIE_CODE=" + transaction.getMovie().getCode() + "\n");
         
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
         }          
     }
 
-    @Override
     public void deleteRecord() {
         StringBuilder builder = new StringBuilder();
-        builder.append("DELETE FROM " + tableName + "\n");
+        builder.append("DELETE FROM " + Constants.TRANSACTION_TABLE_NAME + "\n");
         
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
         }  
     }
     
-    public ArrayList<Transaction> getTransactionsFromDatabase(Connection connection, ArrayList<Movie> movies, ArrayList<Customer> customers){
+    public ArrayList<Transaction> getTransactionsFromDatabase(ArrayList<Movie> movies, ArrayList<Customer> customers){
         try {
             ArrayList<Transaction> transactions = new ArrayList<Transaction>();
             Statement statement = connection.createStatement();

@@ -9,6 +9,7 @@ import com.mycompany.moviemanagementsystem.Constants;
 import com.mycompany.moviemanagementsystem.Movie;
 import com.mycompany.moviemanagementsystem.MovieFactor;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,25 +21,15 @@ import java.util.logging.Logger;
  *
  * @author Vasilis
  */
-public class MovieHandler extends EntityHandler{
+public class MovieHandler {
     
-    private Movie movie;
+    private Connection connection;
         
-    public MovieHandler(Connection connection, Movie movie){
-        super(connection);
-        this.movie = movie;
+    public MovieHandler(Connection connection){
+        this.connection = connection;
     }
     
-    public Movie getMovie(){
-        return movie;
-    }
-    
-    public void setMovie(Movie movie){
-        this.movie = movie;
-    }
-    
-    @Override
-    public void insertRecord(){
+    public void insertRecord(Movie movie){
         StringBuilder builder = new StringBuilder();
         builder.append("INSERT INTO ");
         builder.append(Constants.MOVIE_TABLE_NAME);
@@ -64,7 +55,7 @@ public class MovieHandler extends EntityHandler{
         builder.append(";");
         
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
@@ -72,8 +63,7 @@ public class MovieHandler extends EntityHandler{
         }
     }
     
-    @Override
-    public void deleteRecord(){
+    public void deleteRecord(Movie movie){
         StringBuilder builder = new StringBuilder();
         builder.append("DELETE FROM TABLE ");
         builder.append(Constants.MOVIE_TABLE_NAME);
@@ -86,15 +76,14 @@ public class MovieHandler extends EntityHandler{
         builder.append(",");
         
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
         }
     }
     
-    @Override
-    public void updateRecord(){
+    public void updateRecord(Movie movie){
         StringBuilder builder = new StringBuilder();
         builder.append("UPDATE " + Constants.MOVIE_TABLE_NAME + "\n");
         builder.append(" SET ");
@@ -113,7 +102,7 @@ public class MovieHandler extends EntityHandler{
         builder.append(";");
         
         try{
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex){
             System.out.println("ERROR: Could not execute statement.");
@@ -148,7 +137,7 @@ public class MovieHandler extends EntityHandler{
         return builder.toString();
     }
     
-    public ArrayList<Movie> getMoviesFromDatabase(Connection connection){
+    public ArrayList<Movie> getMoviesFromDatabase(){
         try {
             ArrayList<Movie> movies = new ArrayList<Movie>();
             Statement statement = connection.createStatement();

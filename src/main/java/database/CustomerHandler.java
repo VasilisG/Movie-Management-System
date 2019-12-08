@@ -8,6 +8,7 @@ package database;
 import com.mycompany.moviemanagementsystem.Constants;
 import com.mycompany.moviemanagementsystem.Customer;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,25 +20,15 @@ import java.util.logging.Logger;
  *
  * @author Vasilis
  */
-public class CustomerHandler extends EntityHandler{
+public class CustomerHandler{
     
-    private Customer customer;
+    private Connection connection;
     
-    public CustomerHandler(Connection connection, Customer customer){
-        super(connection);
-        this.customer = customer;
-    }
-    
-    public Customer getCustomer(){
-        return customer;
-    }
-    
-    public void setCustomer(Customer customer){
-        this.customer = customer;
+    public CustomerHandler(Connection connection){
+        this.connection = connection;
     }
 
-    @Override
-    public void insertRecord() {
+    public void insertRecord(Customer customer) {
         StringBuilder builder = new StringBuilder();
         builder.append("INSERT INTO ");
         builder.append(Constants.CUSTOMER_TABLE_NAME + " ");
@@ -52,7 +43,7 @@ public class CustomerHandler extends EntityHandler{
         builder.append(customer.isMemberString());
         
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
@@ -60,8 +51,7 @@ public class CustomerHandler extends EntityHandler{
         
     }
 
-    @Override
-    public void updateRecord() {
+    public void updateRecord(Customer customer) {
         StringBuilder builder = new StringBuilder();
         builder.append("UPDATE " + Constants.CUSTOMER_TABLE_NAME + "\n");
         builder.append("SET ");
@@ -77,7 +67,7 @@ public class CustomerHandler extends EntityHandler{
         builder.append("CODE=" + customer.getCode() + ";");
         
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
@@ -85,21 +75,20 @@ public class CustomerHandler extends EntityHandler{
  
     }
 
-    @Override
-    public void deleteRecord() {
+    public void deleteRecord(Customer customer) {
         StringBuilder builder = new StringBuilder();
         builder.append("DELETE FROM " + Constants.CUSTOMER_TABLE_NAME + " ");
         builder.append("WHERE CODE=" + customer.getCode());
         
         try {
-            preparedStatement = connection.prepareStatement(builder.toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement");
         }
     } 
     
-    public ArrayList<Customer> getCustomersFromDatabase(Connection connection){
+    public ArrayList<Customer> getCustomersFromDatabase(){
         try {
             ArrayList<Customer> customers = new ArrayList<Customer>();
             Statement statement = connection.createStatement();
