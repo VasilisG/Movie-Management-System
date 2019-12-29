@@ -55,8 +55,8 @@ public class CustomerPanel extends JPanel{
     private ArrayList<Customer> customers;
     private ArrayList<Customer> filteredCustomers;
     
-    public CustomerPanel(){
-        initLayout();
+    public CustomerPanel(ArrayList<Customer> customers){
+        initLayout(customers);
         initComponents();
         bindComponents();
     }
@@ -65,9 +65,9 @@ public class CustomerPanel extends JPanel{
         return customers;
     }
     
-    private void initLayout(){
+    private void initLayout(ArrayList<Customer> customers){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        customers = new ArrayList<>();
+        this.customers = customers;
         filteredCustomers = new ArrayList<>();
     }
     

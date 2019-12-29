@@ -54,8 +54,8 @@ public class MoviePanel extends JPanel {
     private JButton dropFiltersButton;
     private ArrayList<JButton> buttonList;
     
-    public MoviePanel(){
-       initLayout();
+    public MoviePanel(ArrayList<Movie> movies){
+       initLayout(movies);
        initComponents();
        bindComponents();
     }
@@ -68,9 +68,9 @@ public class MoviePanel extends JPanel {
         return movieTableModel;
     }
     
-    private void initLayout(){
+    private void initLayout(ArrayList<Movie> movies){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        movies = new ArrayList<>();
+        this.movies = movies;
         filteredMovies = new ArrayList<>();
     }
     

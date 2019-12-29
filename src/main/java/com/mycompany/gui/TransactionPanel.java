@@ -52,9 +52,9 @@ public class TransactionPanel extends JPanel{
     private ArrayList<Transaction> filteredTransactions;
     private ButtonListener buttonListener;
     
-    public TransactionPanel(){
+    public TransactionPanel(ArrayList<Transaction> transactions){
         initLayout();
-        initArrays();
+        initArrays(transactions);
         initComponents();
         bindComponents();
     }
@@ -67,8 +67,8 @@ public class TransactionPanel extends JPanel{
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     }
     
-    private void initArrays(){
-        transactions = new ArrayList<>();
+    private void initArrays(ArrayList<Transaction> transactions){
+        this.transactions = transactions;
         filteredTransactions = new ArrayList<>();
     }
     

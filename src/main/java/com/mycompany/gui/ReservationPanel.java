@@ -71,8 +71,8 @@ public class ReservationPanel extends JPanel{
     private ArrayList<Reservation> reservations;
     private ArrayList<Reservation> filteredReservations;
     
-    public ReservationPanel(MoviePanel moviePanel, CustomerPanel customerPanel, TransactionPanel transactionPanel){
-        initLayout();
+    public ReservationPanel(ArrayList<Reservation> reservations, MoviePanel moviePanel, CustomerPanel customerPanel, TransactionPanel transactionPanel){
+        initLayout(reservations);
         initComponents();
         bindComponents();
         
@@ -84,9 +84,9 @@ public class ReservationPanel extends JPanel{
         this.transactionPanel = transactionPanel;
     }
     
-        private void initLayout(){
+        private void initLayout(ArrayList<Reservation> reservations){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        reservations = new ArrayList<>();
+        this.reservations = reservations;
         filteredReservations = new ArrayList<>();
     }
     
