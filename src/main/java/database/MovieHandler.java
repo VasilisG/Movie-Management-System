@@ -58,13 +58,10 @@ public class MovieHandler {
         builder.append(");");
         System.out.println(builder.toString());
         try {
-//            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-//            preparedStatement.executeUpdate();
             Statement statement = connection.createStatement();
             statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            //Logger.getLogger(MovieHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -73,18 +70,28 @@ public class MovieHandler {
         builder.append("DELETE FROM TABLE ");
         builder.append(Constants.MOVIE_TABLE_NAME);
         builder.append(" WHERE ");
-        builder.append("TITLE=");
+        builder.append("title=");
         builder.append(movie.getTitle());
         builder.append(" AND ");
-        builder.append("YEAR=");
+        builder.append("year=");
         builder.append(movie.getYear());
         builder.append(",");
         
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement.");
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void deleteAllRecords(){
+        String query = "TRUNCATE " + Constants.MOVIE_TABLE_NAME;
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
     
@@ -92,25 +99,26 @@ public class MovieHandler {
         StringBuilder builder = new StringBuilder();
         builder.append("UPDATE " + Constants.MOVIE_TABLE_NAME + "\n");
         builder.append(" SET ");
-        builder.append(" CODE=" + movie.getCode() + ", ");
-        builder.append(" TITLE=" + movie.getTitle() + ", ");
-        builder.append(" YEAR=" + movie.getYear() + ", ");
-        builder.append(" PLOT=" + movie.getPlot() + ", ");
-        builder.append(" ACTORS=" + stringifyActors(movie) + ", ");
-        builder.append(" DIRECTOR=" + stringifyDirector(movie) + ", ");
-        builder.append(" PLAYTIME=" + movie.getPlayTime() + ", ");
-        builder.append(" PRICE=" + movie.getPrice() + ", ");
-        builder.append(" QUANTITY=" + movie.getQuantity() + ", ");
+        builder.append("code=" + movie.getCode() + ", ");
+        builder.append("title=" + movie.getTitle() + ", ");
+        builder.append("type=" + movie.getType() + ", ");
+        builder.append("year=" + movie.getYear() + ", ");
+        builder.append("plot=" + movie.getPlot() + ", ");
+        builder.append("actors=" + stringifyActors(movie) + ", ");
+        builder.append("director=" + stringifyDirector(movie) + ", ");
+        builder.append("playtime=" + movie.getPlayTime() + ", ");
+        builder.append("price=" + movie.getPrice() + ", ");
+        builder.append("quantity=" + movie.getQuantity() + ", ");
         builder.append(" WHERE ");
-        builder.append("CODE=");
+        builder.append("code=");
         builder.append(movie.getTitle());
         builder.append(";");
         
-        try{
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
-        } catch (SQLException ex){
-            System.out.println("ERROR: Could not execute statement.");
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
     

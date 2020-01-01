@@ -270,6 +270,7 @@ public class MoviePanel extends JPanel {
                if(size > 0 && modelSize > 0){
                    int confirmDelete = Status.showConfirmMessage(Constants.CONFIRM_DELETION_ALL);
                    if(confirmDelete == JOptionPane.YES_OPTION){
+                       movieHandler.deleteAllRecords();
                        movieTableModel.setRowCount(0);
                        movies.clear();
                        Status.showInfoMessage(Constants.DELETED + modelSize + Constants.RECORDS);
