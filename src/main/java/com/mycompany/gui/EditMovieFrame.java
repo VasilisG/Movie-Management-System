@@ -9,6 +9,7 @@ import com.mycompany.moviemanagementsystem.Constants;
 import com.mycompany.moviemanagementsystem.Movie;
 import com.mycompany.moviemanagementsystem.MovieFactor;
 import com.mycompany.moviemanagementsystem.Status;
+import database.MovieHandler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -35,8 +36,9 @@ public class EditMovieFrame extends javax.swing.JFrame implements WindowListener
     private DefaultListModel listModel;
     private ArrayList<JButton> buttonList;
     private MovieValidator validator;
+    private MovieHandler movieHandler;
     
-    public EditMovieFrame(int index, ArrayList<Movie> movies, MoviePanel.MovieTableModel movieTableModel, ArrayList<JButton> buttonList) {
+    public EditMovieFrame(int index, ArrayList<Movie> movies, MoviePanel.MovieTableModel movieTableModel, ArrayList<JButton> buttonList, MovieHandler movieHandler) {
         initComponents();
         initComboBox();
         bindListenerToButtons();
@@ -46,6 +48,7 @@ public class EditMovieFrame extends javax.swing.JFrame implements WindowListener
         this.movies = movies;
         this.movieTableModel = movieTableModel;
         this.buttonList = buttonList;
+        this.movieHandler = movieHandler;
         
         setMainPanelMovieButtons(false);
         
@@ -423,6 +426,7 @@ public class EditMovieFrame extends javax.swing.JFrame implements WindowListener
            if(source == editButton){
                Movie movie = getEditedMovie();
                if(validator.isValidMovie(movie)){
+                   movieHandler.updateRecord(movie);
                    movies.set(index, movie);
                    updateRow(index, movieTableModel, movie);
                    Status.showInfoMessage(Constants.MOVIE_TABLE_UPDATED);

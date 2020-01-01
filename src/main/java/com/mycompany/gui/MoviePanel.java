@@ -237,6 +237,8 @@ public class MoviePanel extends JPanel {
                     if(selectedIndex != -1){
                         int confirmDelete = Status.showConfirmMessage(Constants.CONFIRM_DELETION);
                         if(confirmDelete == JOptionPane.YES_OPTION){
+                            Movie movie = movies.get(selectedIndex);
+                            movieHandler.deleteRecord(movie);
                             movieTableModel.removeRow(selectedIndex);
                             movies.remove(selectedIndex);
                             Status.showInfoMessage(Constants.RECORD_DELETED);
@@ -249,6 +251,8 @@ public class MoviePanel extends JPanel {
                     if(confirmDelete == JOptionPane.YES_OPTION){
                         Collections.reverse(indices);
                         for(Integer currentIndex : indices){
+                            Movie movie = movies.get(currentIndex);
+                            movieHandler.deleteRecord(movie);
                             movieTableModel.removeRow(currentIndex);
                         }
                         ArrayList<Movie> tempMovies = new ArrayList<Movie>();
@@ -283,7 +287,7 @@ public class MoviePanel extends JPanel {
                int index = movieTable.getSelectionModel().getLeadSelectionIndex();
                int size = movies.size();
                if(size > 0 && index > -1){
-                   new EditMovieFrame(index, movies, movieTableModel, buttonList);
+                   new EditMovieFrame(index, movies, movieTableModel, buttonList, movieHandler);
                }
                else Status.showErrorMessage(Constants.NO_RECORD_SELECTED);
            }
