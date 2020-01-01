@@ -10,6 +10,7 @@ import com.mycompany.moviemanagementsystem.Main;
 import com.mycompany.moviemanagementsystem.Movie;
 import com.mycompany.moviemanagementsystem.MovieFactor;
 import com.mycompany.moviemanagementsystem.Status;
+import database.MovieHandler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -37,6 +38,7 @@ public class InsertMovieFrame extends javax.swing.JFrame implements WindowListen
     private ButtonListener buttonListener;
     private MovieListener movieListener;
     private MovieValidator validator;
+    private MovieHandler movieHandler;
     
     private DefaultTableModel movieTableModel;
     private ArrayList<Movie> movies;
@@ -45,7 +47,7 @@ public class InsertMovieFrame extends javax.swing.JFrame implements WindowListen
     /**
      * Creates new form InsertCustomerFrame
      */
-    public InsertMovieFrame(DefaultTableModel movieTableModel, ArrayList<Movie> movies, ArrayList<JButton> buttonList) {
+    public InsertMovieFrame(DefaultTableModel movieTableModel, ArrayList<Movie> movies, ArrayList<JButton> buttonList, MovieHandler movieHandler) {
         initComponents();
         initComboBox();
         bindListeners();
@@ -59,6 +61,7 @@ public class InsertMovieFrame extends javax.swing.JFrame implements WindowListen
         this.movieTableModel = movieTableModel;
         this.movies = movies;
         this.buttonList = buttonList;
+        this.movieHandler = movieHandler;
         
         setMainPanelButtonsEnabled(false);
         
@@ -480,6 +483,11 @@ public class InsertMovieFrame extends javax.swing.JFrame implements WindowListen
                     if(validator.hasUniqueCode(movie,movies)){
                         NumberFormat priceFormat = new DecimalFormat("#0.00");
                         String price = priceFormat.format(movie.getPrice()) + " €";
+                        if(movieHandler != null){
+                           movieHandler.insertRecord(movie);
+                            System.out.println("Movie added in database"); 
+                        }
+                        else System.out.println("Movie handler is null for some reason.");
                         movieTableModel.addRow(new Object[]{false, movie.getCode(),movie.getTitle(),price,movie.getQuantity()});
                         movies.add(movie);
                         clearFields();

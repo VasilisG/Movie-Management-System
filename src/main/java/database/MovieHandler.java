@@ -33,32 +33,37 @@ public class MovieHandler {
         StringBuilder builder = new StringBuilder();
         builder.append("INSERT INTO ");
         builder.append(Constants.MOVIE_TABLE_NAME);
-        builder.append(" VALUES ");
+        builder.append("(code, title, type, year, plot, actors, director, playtime, price, quantity) ");
+        builder.append("VALUES");
         builder.append("( ");
         builder.append(movie.getCode());
-        builder.append(" , ");
-        builder.append(movie.getTitle());
-        builder.append(" , ");
+        builder.append(", ");
+        builder.append("\"" + movie.getTitle() + "\"");
+        builder.append(", ");
+        builder.append("\"" + movie.getType() + "\"");
+        builder.append(", ");
         builder.append(movie.getYear());
-        builder.append(" , ");
-        builder.append(movie.getPlot());
-        builder.append(" , ");
-        builder.append(stringifyActors(movie));
-        builder.append(" , ");
-        builder.append(stringifyDirector(movie));
-        builder.append(" , ");
+        builder.append(", ");
+        builder.append("\"" + movie.getPlot() + "\"");
+        builder.append(", ");
+        builder.append("\"" + stringifyActors(movie) + "\"");
+        builder.append(", ");
+        builder.append("\"" + stringifyDirector(movie) + "\"");
+        builder.append(", ");
         builder.append(movie.getPlayTime());
-        builder.append(" , ");
+        builder.append(", ");
         builder.append(movie.getPrice());
-        builder.append(" , ");
+        builder.append(", ");
         builder.append(movie.getQuantity()); 
-        builder.append(";");
-        
+        builder.append(");");
+        System.out.println(builder.toString());
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
+//            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
+//            preparedStatement.executeUpdate();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement.");
+            System.out.println(ex.getMessage());
             //Logger.getLogger(MovieHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -115,7 +120,7 @@ public class MovieHandler {
         actors.stream().map((actor) -> {
             StringBuilder builder = new StringBuilder();
             builder.append(actor.getFirstName());
-            builder.append(",");
+            builder.append("$");
             builder.append(actor.getLastName());
             return builder;            
         }).map((builder) -> {
@@ -124,14 +129,16 @@ public class MovieHandler {
         }).forEach((_item) -> {
             actorsBuilder.append(":");
         });
-        return actorsBuilder.toString();
+        String finalString = actorsBuilder.toString();
+        finalString = finalString.substring(0, actorsBuilder.length()-1);
+        return finalString;
     }
     
     private String stringifyDirector(Movie movie){
         StringBuilder builder = new StringBuilder();
         MovieFactor director = movie.getDirector();
         builder.append(director.getFirstName());
-        builder.append(",");
+        builder.append("$");
         builder.append(director.getLastName());
         
         return builder.toString();
@@ -173,7 +180,7 @@ public class MovieHandler {
         String[] splitActors = actorsString.split(":");
         ArrayList<MovieFactor> actors = new ArrayList<MovieFactor>();
         for(String splitActor : splitActors){
-            String[] fullName = splitActor.split(",");
+            String[] fullName = splitActor.split("\\$");           
             String firstName = fullName[0];
             String lastName = fullName[1];
             MovieFactor actor = new MovieFactor(firstName, lastName);
@@ -183,7 +190,7 @@ public class MovieHandler {
     }
     
     private MovieFactor deserializeDirector(String directorString){
-        String[] splitDirector = directorString.split(",");
+        String[] splitDirector = directorString.split("\\$");
         String firstName = splitDirector[0];
         String lastName = splitDirector[1];
         MovieFactor movieFactor = new MovieFactor(firstName, lastName);

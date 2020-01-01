@@ -8,6 +8,7 @@ package com.mycompany.gui;
 import com.mycompany.moviemanagementsystem.Constants;
 import com.mycompany.moviemanagementsystem.Movie;
 import com.mycompany.moviemanagementsystem.Status;
+import database.MovieHandler;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -15,6 +16,8 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.swing.Box;
@@ -42,6 +45,7 @@ public class MoviePanel extends JPanel {
     private JScrollPane scrollPane;
     private ArrayList<Movie> movies;
     private ArrayList<Movie> filteredMovies;
+    private MovieHandler movieHandler;
     
     private JPanel buttonPanel;
     private GridBagConstraints constraints;
@@ -54,10 +58,11 @@ public class MoviePanel extends JPanel {
     private JButton dropFiltersButton;
     private ArrayList<JButton> buttonList;
     
-    public MoviePanel(ArrayList<Movie> movies){
-       initLayout(movies);
+    public MoviePanel(ArrayList<Movie> movies, MovieHandler movieHandler){
+       initLayout(movies, movieHandler);
        initComponents();
        bindComponents();
+       fillTable();
     }
     
     public ArrayList<Movie> getMovies(){
@@ -68,9 +73,10 @@ public class MoviePanel extends JPanel {
         return movieTableModel;
     }
     
-    private void initLayout(ArrayList<Movie> movies){
+    private void initLayout(ArrayList<Movie> movies, MovieHandler movieHandler){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.movies = movies;
+        this.movieHandler = movieHandler;
         filteredMovies = new ArrayList<>();
     }
     
@@ -85,6 +91,14 @@ public class MoviePanel extends JPanel {
         bindListenerToButtons();
         bindButtons();
         bindPanels();
+    }
+    
+    private void fillTable(){
+        for(Movie movie : movies){
+            NumberFormat priceFormat = new DecimalFormat("#0.00");
+            String price = priceFormat.format(movie.getPrice()) + " €";
+            movieTableModel.addRow(new Object[]{false, movie.getCode(),movie.getTitle(),price,movie.getQuantity()});
+        }
     }
     
     private void initPanels(){
@@ -207,7 +221,7 @@ public class MoviePanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
            Object source = event.getSource();
            if(source == insertMovieButton){
-               new InsertMovieFrame(movieTableModel, movies, buttonList);
+               new InsertMovieFrame(movieTableModel, movies, buttonList, movieHandler);
            }
            if(source == deleteMovieButton){
                ArrayList<Integer> indices = new ArrayList<Integer>();
