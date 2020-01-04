@@ -67,7 +67,7 @@ public class MovieHandler {
     
     public void deleteRecord(Movie movie){
         StringBuilder builder = new StringBuilder();
-        builder.append("DELETE FROM TABLE ");
+        builder.append("DELETE FROM ");
         builder.append(Constants.MOVIE_TABLE_NAME);
         builder.append(" WHERE ");
         builder.append("code=");
