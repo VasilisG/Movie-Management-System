@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -105,6 +107,8 @@ public class EditMovieFrame extends javax.swing.JFrame implements WindowListener
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         movieCodeLabel.setText("Code: ");
+
+        movieCodeField.setEditable(false);
 
         movieTitleLabel.setText("Title:");
 
@@ -389,9 +393,12 @@ public class EditMovieFrame extends javax.swing.JFrame implements WindowListener
     }
     
     private void updateRow(int index, MoviePanel.MovieTableModel movieTableModel, Movie movie){
+        NumberFormat priceFormat = new DecimalFormat("#0.00");
+        String price = priceFormat.format(movie.getPrice()) + " €";
+        
         movieTableModel.setValueAt(movie.getCode(), index, 1);
         movieTableModel.setValueAt(movie.getTitle(), index, 2);
-        movieTableModel.setValueAt(String.valueOf(movie.getPrice()), index, 3);
+        movieTableModel.setValueAt(price, index, 3);
         movieTableModel.setValueAt(String.valueOf(movie.getQuantity()), index, 4);
     }
 

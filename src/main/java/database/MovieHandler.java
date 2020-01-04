@@ -70,13 +70,9 @@ public class MovieHandler {
         builder.append("DELETE FROM TABLE ");
         builder.append(Constants.MOVIE_TABLE_NAME);
         builder.append(" WHERE ");
-        builder.append("title=");
-        builder.append(movie.getTitle());
-        builder.append(" AND ");
-        builder.append("year=");
-        builder.append(movie.getYear());
-        builder.append(",");
-        
+        builder.append("code=");
+        builder.append(movie.getCode());
+        builder.append(";");
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(builder.toString());
@@ -99,19 +95,19 @@ public class MovieHandler {
         StringBuilder builder = new StringBuilder();
         builder.append("UPDATE " + Constants.MOVIE_TABLE_NAME + "\n");
         builder.append(" SET ");
-        builder.append("code=" + movie.getCode() + ", ");
-        builder.append("title=" + movie.getTitle() + ", ");
-        builder.append("type=" + movie.getType() + ", ");
-        builder.append("year=" + movie.getYear() + ", ");
-        builder.append("plot=" + movie.getPlot() + ", ");
-        builder.append("actors=" + stringifyActors(movie) + ", ");
-        builder.append("director=" + stringifyDirector(movie) + ", ");
+        builder.append("code=" + "\"" + movie.getCode() + "\"" + ", ");
+        builder.append("title=" + "\"" + movie.getTitle() + "\"" + ", ");
+        builder.append("type=" + "\"" + movie.getType() + "\"" + ", ");
+        builder.append("year=" + movie.getYear()  + ", ");
+        builder.append("plot=" + "\"" + movie.getPlot() + "\"" + ", ");
+        builder.append("actors=" + "\"" + stringifyActors(movie) + "\"" + ", ");
+        builder.append("director=" + "\"" + stringifyDirector(movie) + "\"" + ", ");
         builder.append("playtime=" + movie.getPlayTime() + ", ");
         builder.append("price=" + movie.getPrice() + ", ");
-        builder.append("quantity=" + movie.getQuantity() + ", ");
+        builder.append("quantity=" + movie.getQuantity());
         builder.append(" WHERE ");
         builder.append("code=");
-        builder.append(movie.getTitle());
+        builder.append(movie.getCode());
         builder.append(";");
         
         try {
