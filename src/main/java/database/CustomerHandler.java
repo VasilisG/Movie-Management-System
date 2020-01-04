@@ -31,7 +31,8 @@ public class CustomerHandler{
     public void insertRecord(Customer customer) {
         StringBuilder builder = new StringBuilder();
         builder.append("INSERT INTO ");
-        builder.append(Constants.CUSTOMER_TABLE_NAME + " ");
+        builder.append(Constants.CUSTOMER_TABLE_NAME);
+        builder.append("(code,first_name,last_name,address,email_address,phone_number,member) ");
         builder.append("VALUES ");
         builder.append("( ");
         builder.append(customer.getCode());
@@ -41,7 +42,7 @@ public class CustomerHandler{
         builder.append(customer.getEmailAddress());
         builder.append(customer.getPhoneNumber());
         builder.append(customer.isMemberString());
-        
+        builder.append(" )");
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
@@ -55,16 +56,16 @@ public class CustomerHandler{
         StringBuilder builder = new StringBuilder();
         builder.append("UPDATE " + Constants.CUSTOMER_TABLE_NAME + "\n");
         builder.append("SET ");
-        builder.append("CODE=" + customer.getCode() + ", ");
-        builder.append("FIRST_NAME=" + customer.getFirstName() + ", ");
-        builder.append("LAST_NAME=" + customer.getLastName() + ", ");
-        builder.append("ADDRESS=" + customer.getAddress());
-        builder.append("EMAIL_ADDRESS=" + customer.getEmailAddress());
-        builder.append("PHONE_NUMBER=" + customer.getPhoneNumber());
-        builder.append("MEMBER=" + customer.isMemberString());
+        builder.append("code=" + customer.getCode() + ", ");
+        builder.append("first_name=" + customer.getFirstName() + ", ");
+        builder.append("last_name=" + customer.getLastName() + ", ");
+        builder.append("address=" + customer.getAddress());
+        builder.append("email_address=" + customer.getEmailAddress());
+        builder.append("phone_number=" + customer.getPhoneNumber());
+        builder.append("member=" + customer.isMemberString());
         builder.append("\n");
         builder.append("WHERE ");
-        builder.append("CODE=" + customer.getCode() + ";");
+        builder.append("code=" + customer.getCode() + ";");
         
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
@@ -78,15 +79,25 @@ public class CustomerHandler{
     public void deleteRecord(Customer customer) {
         StringBuilder builder = new StringBuilder();
         builder.append("DELETE FROM " + Constants.CUSTOMER_TABLE_NAME + " ");
-        builder.append("WHERE CODE=" + customer.getCode());
+        builder.append("WHERE code=" + customer.getCode());
         
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement");
+            System.out.println("ERROR: Could not execute statement.");
         }
-    } 
+    }
+    
+    public void deleteAllRecords(){
+        String query = "TRUNCATE " + Constants.CUSTOMER_TABLE_NAME;
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch(SQLException Ex){
+            System.out.println("Error: Could not execute statement.");
+        }
+    }
     
     public ArrayList<Customer> getCustomersFromDatabase(){
         try {

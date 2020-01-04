@@ -8,6 +8,7 @@ package com.mycompany.gui;
 import com.mycompany.moviemanagementsystem.Constants;
 import com.mycompany.moviemanagementsystem.Customer;
 import com.mycompany.moviemanagementsystem.Status;
+import database.CustomerHandler;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -54,9 +55,10 @@ public class CustomerPanel extends JPanel{
     
     private ArrayList<Customer> customers;
     private ArrayList<Customer> filteredCustomers;
+    private CustomerHandler customerHandler;
     
-    public CustomerPanel(ArrayList<Customer> customers){
-        initLayout(customers);
+    public CustomerPanel(ArrayList<Customer> customers, CustomerHandler customerHandler){
+        initLayout(customers, customerHandler);
         initComponents();
         bindComponents();
     }
@@ -65,9 +67,10 @@ public class CustomerPanel extends JPanel{
         return customers;
     }
     
-    private void initLayout(ArrayList<Customer> customers){
+    private void initLayout(ArrayList<Customer> customers, CustomerHandler customerHandler){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.customers = customers;
+        this.customerHandler = customerHandler;
         filteredCustomers = new ArrayList<>();
     }
     
@@ -203,7 +206,7 @@ public class CustomerPanel extends JPanel{
         public void actionPerformed(ActionEvent event) {
             Object source = event.getSource();
             if(source == insertCustomerButton){
-                new InsertCustomerFrame(customerTableModel, customers, buttonList);
+                new InsertCustomerFrame(customerTableModel, customers, buttonList, customerHandler);
             }
             if(source == deleteCustomerButton){
                 ArrayList<Integer> indices = new ArrayList<Integer>();
@@ -263,7 +266,7 @@ public class CustomerPanel extends JPanel{
                int index = customerTable.getSelectionModel().getLeadSelectionIndex();
                int size = customers.size();
                if(size > 0 && index > -1){
-                   new EditCustomerFrame(index, customers, customerTableModel, buttonList);
+                   new EditCustomerFrame(index, customers, customerTableModel, buttonList, customerHandler);
                }
                else Status.showErrorMessage(Constants.NO_RECORD_SELECTED);
             }

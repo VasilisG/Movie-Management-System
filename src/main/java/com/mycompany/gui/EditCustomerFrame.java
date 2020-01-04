@@ -9,6 +9,7 @@ import com.mycompany.gui.CustomerPanel.CustomerTableModel;
 import com.mycompany.moviemanagementsystem.Constants;
 import com.mycompany.moviemanagementsystem.Customer;
 import com.mycompany.moviemanagementsystem.Status;
+import database.CustomerHandler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -36,8 +37,9 @@ public class EditCustomerFrame extends javax.swing.JFrame implements WindowListe
     private ArrayList<JButton> buttonList;
     private CustomerValidator customerValidator;
     private ButtonListener buttonListener;
+    private CustomerHandler customerHandler;
     
-    public EditCustomerFrame(int index, ArrayList<Customer> customers, CustomerTableModel customerTableModel, ArrayList<JButton> buttonList) {
+    public EditCustomerFrame(int index, ArrayList<Customer> customers, CustomerTableModel customerTableModel, ArrayList<JButton> buttonList, CustomerHandler customerHandler) {
         initComponents();
         addWindowListener(this);
         bindListener();
@@ -45,6 +47,7 @@ public class EditCustomerFrame extends javax.swing.JFrame implements WindowListe
         this.index = index;
         this.customers = customers;
         this.buttonList = buttonList;
+        this.customerHandler = customerHandler;
         this.customerTableModel = customerTableModel;        
         this.customerValidator = new CustomerValidator();
         
@@ -111,6 +114,7 @@ public class EditCustomerFrame extends javax.swing.JFrame implements WindowListe
                 if(customerValidator.isValidCustomer(customer)){
                     customers.set(index, customer);
                     updateRow(index, customerTableModel, customer);
+                    customerHandler.updateRecord(customer);
                     Status.showInfoMessage(Constants.CUSTOMER_TABLE_UPDATED);
                 }
                 else Status.showErrorMessage(Constants.INVALID_DATA);
@@ -157,6 +161,8 @@ public class EditCustomerFrame extends javax.swing.JFrame implements WindowListe
         setResizable(false);
 
         customerCodeLabel.setText("Code:");
+
+        customerCodeField.setEditable(false);
 
         customerFirstNameLabel.setText("First name:");
 

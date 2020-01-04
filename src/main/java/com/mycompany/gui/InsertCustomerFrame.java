@@ -8,6 +8,7 @@ package com.mycompany.gui;
 import com.mycompany.moviemanagementsystem.Constants;
 import com.mycompany.moviemanagementsystem.Customer;
 import com.mycompany.moviemanagementsystem.Status;
+import database.CustomerHandler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -31,11 +32,12 @@ public class InsertCustomerFrame extends javax.swing.JFrame implements WindowLis
     private DefaultTableModel customerTableModel;
     private ArrayList<Customer> customers;
     private ArrayList<JButton> buttonList;
+    private CustomerHandler customerHandler;
 
     /**
      * Creates new form InsertCustomerFrame
      */
-    public InsertCustomerFrame(DefaultTableModel customerTableModel, ArrayList<Customer> customers, ArrayList<JButton> buttonList) {
+    public InsertCustomerFrame(DefaultTableModel customerTableModel, ArrayList<Customer> customers, ArrayList<JButton> buttonList, CustomerHandler customerHandler) {
         initComponents();
         bindListeners();
         addWindowListener(this);
@@ -45,6 +47,7 @@ public class InsertCustomerFrame extends javax.swing.JFrame implements WindowLis
         this.customerTableModel = customerTableModel;
         this.customers = customers;
         this.buttonList = buttonList;
+        this.customerHandler = customerHandler;
         
         setMainPanelButtonsEnabled(false);
         
@@ -309,6 +312,7 @@ public class InsertCustomerFrame extends javax.swing.JFrame implements WindowLis
                             customer.isMemberString()
                         });
                         customers.add(customer);
+                        customerHandler.insertRecord(customer);
                         Status.showInfoMessage(Constants.CUSTOMER_ADDED);
                         clearFields();
                     }
