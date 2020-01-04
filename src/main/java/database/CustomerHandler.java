@@ -44,8 +44,8 @@ public class CustomerHandler{
         builder.append(customer.isMemberString());
         builder.append(" )");
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
         }
@@ -68,8 +68,8 @@ public class CustomerHandler{
         builder.append("code=" + customer.getCode() + ";");
         
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
         }
@@ -82,8 +82,8 @@ public class CustomerHandler{
         builder.append("WHERE code=" + customer.getCode());
         
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
             System.out.println("ERROR: Could not execute statement.");
         }
