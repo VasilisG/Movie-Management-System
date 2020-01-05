@@ -32,22 +32,22 @@ public class CustomerHandler{
         StringBuilder builder = new StringBuilder();
         builder.append("INSERT INTO ");
         builder.append(Constants.CUSTOMER_TABLE_NAME);
-        builder.append("(code,first_name,last_name,address,email_address,phone_number,member) ");
+        builder.append("(code,first_name,last_name,address,email,phone_number,member) ");
         builder.append("VALUES ");
         builder.append("( ");
-        builder.append(customer.getCode());
-        builder.append(customer.getFirstName());
-        builder.append(customer.getLastName());
-        builder.append(customer.getAddress());
-        builder.append(customer.getEmailAddress());
-        builder.append(customer.getPhoneNumber());
-        builder.append(customer.isMemberString());
+        builder.append(customer.getCode() + ", ");
+        builder.append("\"" + customer.getFirstName() + "\"" + ", ");
+        builder.append("\"" + customer.getLastName() + "\"" + ", ");
+        builder.append("\"" + customer.getAddress() + "\"" + ", ");
+        builder.append("\"" +customer.getEmailAddress() + "\"" + ", ");
+        builder.append(customer.getPhoneNumber() + ", ");
+        builder.append(customer.isMember());
         builder.append(" )");
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement.");
+            System.out.println(ex.getMessage());
         }
         
     }
@@ -57,21 +57,20 @@ public class CustomerHandler{
         builder.append("UPDATE " + Constants.CUSTOMER_TABLE_NAME + "\n");
         builder.append("SET ");
         builder.append("code=" + customer.getCode() + ", ");
-        builder.append("first_name=" + customer.getFirstName() + ", ");
-        builder.append("last_name=" + customer.getLastName() + ", ");
-        builder.append("address=" + customer.getAddress());
-        builder.append("email_address=" + customer.getEmailAddress());
-        builder.append("phone_number=" + customer.getPhoneNumber());
-        builder.append("member=" + customer.isMemberString());
-        builder.append("\n");
-        builder.append("WHERE ");
+        builder.append("first_name=" + "\"" + customer.getFirstName() + "\"" + ", ");
+        builder.append("last_name=" + "\"" + customer.getLastName() + "\"" + ", ");
+        builder.append("address=" + "\"" + customer.getAddress() + "\"" + ", ");
+        builder.append("email=" + "\"" + customer.getEmailAddress() + "\"" + ", ");
+        builder.append("phone_number=" + customer.getPhoneNumber() + ", ");
+        builder.append("member=" + customer.isMember());
+        builder.append(" WHERE ");
         builder.append("code=" + customer.getCode() + ";");
         
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement.");
+            System.out.println(ex.getMessage());
         }
  
     }
@@ -85,7 +84,7 @@ public class CustomerHandler{
             Statement statement = connection.createStatement();
             statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement.");
+            System.out.println(ex.getMessage());
         }
     }
     
@@ -94,8 +93,8 @@ public class CustomerHandler{
         try {
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);
-        } catch(SQLException Ex){
-            System.out.println("Error: Could not execute statement.");
+        } catch(SQLException ex){
+            System.out.println(ex.getMessage());
         }
     }
     
@@ -118,7 +117,7 @@ public class CustomerHandler{
             }
             return customers;
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
             return null;
         }
     }
