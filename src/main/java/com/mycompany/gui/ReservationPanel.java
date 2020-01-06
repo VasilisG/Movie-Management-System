@@ -13,6 +13,7 @@ import com.mycompany.moviemanagementsystem.Reservation;
 import com.mycompany.moviemanagementsystem.Status;
 import com.mycompany.moviemanagementsystem.Transaction;
 import database.ReservationHandler;
+import database.TransactionHandler;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -72,8 +73,14 @@ public class ReservationPanel extends JPanel{
     private ArrayList<Reservation> reservations;
     private ArrayList<Reservation> filteredReservations;
     private ReservationHandler reservationHandler;
+    private TransactionHandler transactionHandler;
     
-    public ReservationPanel(ArrayList<Reservation> reservations, MoviePanel moviePanel, CustomerPanel customerPanel, TransactionPanel transactionPanel, ReservationHandler reservationHandler){
+    public ReservationPanel(ArrayList<Reservation> reservations, 
+            MoviePanel moviePanel, 
+            CustomerPanel customerPanel, 
+            TransactionPanel transactionPanel, 
+            ReservationHandler reservationHandler,
+            TransactionHandler transactionHandler){
         initLayout(reservations);
         initComponents();
         bindComponents();
@@ -85,6 +92,7 @@ public class ReservationPanel extends JPanel{
         this.customerPanel = customerPanel;
         this.transactionPanel = transactionPanel;
         this.reservationHandler = reservationHandler;
+        this.transactionHandler = transactionHandler;
     }
     
     private void initLayout(ArrayList<Reservation> reservations){
