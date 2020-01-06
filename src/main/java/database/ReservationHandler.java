@@ -63,7 +63,8 @@ public class ReservationHandler {
         builder.append(Constants.RESERVATION_TABLE_NAME);
         builder.append("\n");
         builder.append("SET ");
-        builder.append("start_date=" + reservation.getStartDate() + ";");
+        builder.append("start_date=" + reservation.getStartDate() + ", ");
+        builder.append("status=" + reservation.getStatus() + ";");
         
         try {
             Statement statement = connection.createStatement();

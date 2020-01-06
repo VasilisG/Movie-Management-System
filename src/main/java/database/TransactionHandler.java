@@ -34,16 +34,17 @@ public class TransactionHandler {
     public void insertRecord(Transaction transaction) {
         StringBuilder builder = new StringBuilder();
         builder.append("INSERT INTO " + Constants.TRANSACTION_TABLE_NAME + " ");
-        builder.append("VALUES (");
-        builder.append(transaction.getDate() + ", ");
+        builder.append("(movie_code, customer_code, date)");
+        builder.append(" VALUES (");
+        builder.append(transaction.getMovie().getCode() + ", ");
         builder.append(transaction.getCustomer().getCode() + ", ");
-        builder.append(transaction.getMovie().getCode() + ")");
+        builder.append(transaction.getDate() + ")");
         
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement.");
+            System.out.println(ex.getMessage());
         }
         
     }
@@ -52,28 +53,16 @@ public class TransactionHandler {
         StringBuilder builder = new StringBuilder();
         builder.append("UPDATE " + Constants.TRANSACTION_TABLE_NAME + "\n");
         builder.append("SET ");
-        builder.append("DATE=" + transaction.getDate() + ", ");
-        builder.append("CUSTOMER_CODE=" + transaction.getCustomer().getCode() + ", ");
-        builder.append("MOVIE_CODE=" + transaction.getMovie().getCode() + "\n");
+        builder.append("movie_code=" + transaction.getMovie().getCode() + ", ");
+        builder.append("customer_code=" + transaction.getCustomer().getCode() + ", ");
+        builder.append("date=" + transaction.getDate() + ";");
         
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement.");
+            System.out.println(ex.getMessage());
         }          
-    }
-
-    public void deleteRecord() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("DELETE FROM " + Constants.TRANSACTION_TABLE_NAME + "\n");
-        
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement.");
-        }  
     }
     
     public ArrayList<Transaction> getTransactionsFromDatabase(ArrayList<Movie> movies, ArrayList<Customer> customers){
@@ -94,7 +83,7 @@ public class TransactionHandler {
             }
             return transactions;
         } catch (SQLException ex) {
-            Logger.getLogger(TransactionHandler.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
             return null;
         }
     }

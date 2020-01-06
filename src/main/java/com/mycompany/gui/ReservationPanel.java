@@ -324,6 +324,8 @@ public class ReservationPanel extends JPanel{
                                 movie.setQuantity(movie.getQuantity()+1);
                                 updateRow(movieIndex, movieTableModel, movie);
                                 updateReservationRow(selectedIndex, reservationTableModel, reservation, Constants.CANCELED);
+                                reservation.setStatus(Constants.STATUS_CANCELED);
+                                reservationHandler.updateRecord(reservation);
                             }
                         }
                     }
@@ -338,6 +340,8 @@ public class ReservationPanel extends JPanel{
                             movie.setQuantity(movie.getQuantity()+1);
                             updateRow(movieIndex, movieTableModel, movie);
                             updateReservationRow(index, reservationTableModel, reservation, Constants.CANCELED);
+                            reservation.setStatus(Constants.STATUS_CANCELED);
+                            reservationHandler.updateRecord(reservation);
                           }  
                         } 
                     }
@@ -355,6 +359,8 @@ public class ReservationPanel extends JPanel{
                         movie.setQuantity(movie.getQuantity()+1);
                         updateRow(movieIndex, movieTableModel, movie);
                         updateReservationRow(currentReservationIndex, reservationTableModel, reservation, Constants.CANCELED);
+                        reservation.setStatus(Constants.STATUS_CANCELED);
+                        reservationHandler.updateRecord(reservation);
                         currentReservationIndex++;
                     }
                     Status.showInfoMessage(Constants.ALL_RESERVATIONS_CANCELED);
@@ -390,13 +396,14 @@ public class ReservationPanel extends JPanel{
                         if(selectedIndex != -1){
                             Reservation reservation = reservations.get(selectedIndex);
                             if(reservation.getStatus() == Constants.STATUS_CANCELED){
-                                Status.showErrorMessage(Constants.RESERVATION_IS_CANCELLED);
+                                Status.showErrorMessage(Constants.RESERVATION_IS_CANCELED);
                             }
                             else{
                                 int confirmComplete = Status.showConfirmMessage(Constants.COMPLETE_RESERVATIONS);
                                 if(confirmComplete == JOptionPane.YES_OPTION){
                                     reservations.get(selectedIndex).setStatus(Constants.STATUS_COMPLETED);
                                     updateReservationRow(selectedIndex, reservationTableModel, reservation, Constants.COMPLETED);
+                                    reservationHandler.updateRecord(reservation);
                                     Date currentDate = new Date();
                                     transaction = new Transaction(reservation.getCustomer(), reservation.getMovie(), currentDate);
                                     transactionPanel.addTransaction(transaction);
@@ -417,6 +424,7 @@ public class ReservationPanel extends JPanel{
                                 else{
                                    reservations.get(index).setStatus(Constants.STATUS_COMPLETED);
                                    updateReservationRow(index, reservationTableModel, reservation, Constants.COMPLETED);
+                                   reservationHandler.updateRecord(reservation);
                                    Date currentDate = new Date();
                                    transaction = new Transaction(reservation.getCustomer(), reservation.getMovie(), currentDate);
                                    transactionPanel.addTransaction(transaction);
@@ -445,6 +453,7 @@ public class ReservationPanel extends JPanel{
                             else{
                                 reservations.get(currentReservationIndex).setStatus(Constants.STATUS_COMPLETED);
                                 updateReservationRow(currentReservationIndex, reservationTableModel, reservation, Constants.COMPLETED);
+                                reservationHandler.updateRecord(reservation);
                                 Date currentDate = new Date();
                                 transaction = new Transaction(reservation.getCustomer(), reservation.getMovie(), currentDate);
                                 transactionPanel.addTransaction(transaction);
