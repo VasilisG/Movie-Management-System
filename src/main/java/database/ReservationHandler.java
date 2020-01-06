@@ -35,7 +35,8 @@ public class ReservationHandler {
        StringBuilder builder = new StringBuilder();
        builder.append("INSERT INTO ");
        builder.append(Constants.RESERVATION_TABLE_NAME + " ");
-       builder.append("VALUES (");
+       builder.append("(movie_code, customer_code, start_date, end_date, status)");
+       builder.append(" VALUES (");
        builder.append(reservation.getCustomer().getCode());
        builder.append(", ");
        builder.append(reservation.getMovie().getCode());
@@ -43,6 +44,8 @@ public class ReservationHandler {
        builder.append(reservation.getStartDate());
        builder.append(", ");
        builder.append(reservation.getEndDate());
+       builder.append(", ");
+       builder.append("\"" + reservation.getStatus() + "\"");
        builder.append(" );");
        
         try {
@@ -60,27 +63,43 @@ public class ReservationHandler {
         builder.append(Constants.RESERVATION_TABLE_NAME);
         builder.append("\n");
         builder.append("SET ");
-        builder.append("START_DATE=" + reservation.getStartDate() + ", ");
-        builder.append("END_DATE=" + reservation.getEndDate() + "\n");
+        builder.append("start_date=" + reservation.getStartDate() + ";");
         
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not prepare statement.");
+            System.out.println(ex.getMessage());
         }
     }
 
     public void deleteRecord(Reservation reservation) {
         StringBuilder builder = new StringBuilder();
         builder.append("DELETE FROM " + Constants.RESERVATION_TABLE_NAME + " \n");
+        builder.append(" WHERE ");
+        builder.append("movie_code=");
+        builder.append(reservation.getMovie().getCode());
+        builder.append(" AND ");
+        builder.append("customer_code=");
+        builder.append(reservation.getCustomer().getCode());
         builder.append(";");
         
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
-            preparedStatement.executeUpdate();
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement.");
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void deleteAllRecords(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("TRUNCATE " + Constants.RESERVATION_TABLE_NAME + ";");
+        try{
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(builder.toString());
+        } catch(SQLException ex){
+            System.out.println(ex.getMessage());
         }
     }
     

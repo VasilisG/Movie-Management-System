@@ -78,6 +78,7 @@ public class CustomerPanel extends JPanel{
         initPanels();
         initTable();
         initButtons();
+        fillTable();
     }
     
     private void bindComponents(){
@@ -98,6 +99,19 @@ public class CustomerPanel extends JPanel{
     private void bindPanels(){
         add(customerTablePanel);
         add(buttonPanel);
+    }
+    
+    private void fillTable(){
+        for(Customer customer : customers){
+            customerTableModel.addRow(new Object[]{false,
+                customer.getCode(),
+                customer.getFirstName(),
+                customer.getLastName(),
+                customer.getAddress(),
+                customer.getPhoneNumber(),
+                customer.isMemberString()
+            });
+        }
     }
     
     private void initTable(){

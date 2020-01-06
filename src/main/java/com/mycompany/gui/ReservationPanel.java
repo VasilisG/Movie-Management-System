@@ -12,6 +12,7 @@ import com.mycompany.moviemanagementsystem.Movie;
 import com.mycompany.moviemanagementsystem.Reservation;
 import com.mycompany.moviemanagementsystem.Status;
 import com.mycompany.moviemanagementsystem.Transaction;
+import database.ReservationHandler;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -70,8 +71,9 @@ public class ReservationPanel extends JPanel{
     
     private ArrayList<Reservation> reservations;
     private ArrayList<Reservation> filteredReservations;
+    private ReservationHandler reservationHandler;
     
-    public ReservationPanel(ArrayList<Reservation> reservations, MoviePanel moviePanel, CustomerPanel customerPanel, TransactionPanel transactionPanel){
+    public ReservationPanel(ArrayList<Reservation> reservations, MoviePanel moviePanel, CustomerPanel customerPanel, TransactionPanel transactionPanel, ReservationHandler reservationHandler){
         initLayout(reservations);
         initComponents();
         bindComponents();
@@ -82,9 +84,10 @@ public class ReservationPanel extends JPanel{
         this.moviePanel = moviePanel;
         this.customerPanel = customerPanel;
         this.transactionPanel = transactionPanel;
+        this.reservationHandler = reservationHandler;
     }
     
-        private void initLayout(ArrayList<Reservation> reservations){
+    private void initLayout(ArrayList<Reservation> reservations){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.reservations = reservations;
         filteredReservations = new ArrayList<>();
@@ -94,6 +97,7 @@ public class ReservationPanel extends JPanel{
         initPanels();
         initTable();
         initButtons();
+        fillTable();
     }
     
     private void bindComponents(){
@@ -114,6 +118,22 @@ public class ReservationPanel extends JPanel{
     private void bindPanels(){
         add(reservationTablePanel);
         add(buttonPanel);
+    }
+    
+    private void fillTable(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String formattedFromDate = null;
+        String formattedToDate = null;
+        for(Reservation reservation : reservations){
+            formattedFromDate = simpleDateFormat.format(reservation.getStartDate());
+            formattedToDate = simpleDateFormat.format(reservation.getEndDate());
+            reservationTableModel.addRow(new Object[]{false, 
+                reservation.getCustomer().getCode(),
+                reservation.getMovie().getCode(),
+                formattedFromDate,
+                formattedToDate,
+                reservation.getStatusString()});
+        }
     }
     
     private void initTable(){
@@ -274,7 +294,7 @@ public class ReservationPanel extends JPanel{
             Object source = event.getSource();
             if(source == insertReservationButton){
                 if(canInsert(movies, customers)){
-                    new InsertReservationFrame(buttonList, movies, customers, reservations, moviePanel.getMovieTableModel(), reservationTableModel);
+                    new InsertReservationFrame(buttonList, movies, customers, reservations, moviePanel.getMovieTableModel(), reservationTableModel, reservationHandler);
                 }
                 else Status.showErrorMessage(Constants.CANNOT_INSERT_RESERVATION);
             }

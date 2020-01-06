@@ -12,6 +12,7 @@ import com.mycompany.moviemanagementsystem.Customer;
 import com.mycompany.moviemanagementsystem.Movie;
 import com.mycompany.moviemanagementsystem.Reservation;
 import com.mycompany.moviemanagementsystem.Status;
+import database.ReservationHandler;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -46,8 +47,15 @@ public class InsertReservationFrame extends javax.swing.JFrame implements Window
     private CustomerValidator customerValidator;
     private MovieTableModel movieTableModel;
     private ReservationTableModel reservationTableModel;
+    private ReservationHandler reservationHandler;
     
-    public InsertReservationFrame(ArrayList<JButton> buttonList, ArrayList<Movie> movies, ArrayList<Customer> customers, ArrayList<Reservation> reservations, MovieTableModel movieTableModel, ReservationTableModel reservationTableModel) {
+    public InsertReservationFrame(ArrayList<JButton> buttonList, 
+                                  ArrayList<Movie> movies, 
+                                  ArrayList<Customer> customers, 
+                                  ArrayList<Reservation> reservations, 
+                                  MovieTableModel movieTableModel, 
+                                  ReservationTableModel reservationTableModel, 
+                                  ReservationHandler reservationHandler) {
         initComponents();
         
         addWindowListener(this);
@@ -58,6 +66,7 @@ public class InsertReservationFrame extends javax.swing.JFrame implements Window
         this.reservations = reservations;
         this.movieTableModel = movieTableModel;
         this.reservationTableModel = reservationTableModel;
+        this.reservationHandler = reservationHandler;
         
         movieValidator = new MovieValidator();
         customerValidator = new CustomerValidator();
@@ -225,6 +234,7 @@ public class InsertReservationFrame extends javax.swing.JFrame implements Window
                                                             formattedFromDate,
                                                             formattedToDate,
                                                             Constants.ONGOING});
+                    reservationHandler.insertRecord(reservation);
                     Status.showInfoMessage(Constants.RESERVATION_ADDED);
                     clearFields();
                 }
