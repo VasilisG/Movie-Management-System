@@ -37,6 +37,7 @@ public final class Constants {
     public static final String SEARCH_CUSTOMER_FRAME_TITLE = "Search customer";
     
     public static final String INSERT_RESERVATION_FRAME_TITLE = "Insert reservation";
+    public static final String EDIT_RESERVATION_FRAME_TITLE = "Edit reservation";
     
     public static final String MOVIES_TAB_TITLE = "Movies";
     public static final String CUSTOMERS_TAB_TITLE = "Customers";

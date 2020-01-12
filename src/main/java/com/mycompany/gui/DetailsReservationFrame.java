@@ -6,6 +6,7 @@
 package com.mycompany.gui;
 
 import com.mycompany.gui.ReservationPanel.ReservationTableModel;
+import com.mycompany.moviemanagementsystem.Constants;
 import com.mycompany.moviemanagementsystem.Customer;
 import com.mycompany.moviemanagementsystem.Movie;
 import com.mycompany.moviemanagementsystem.Reservation;
@@ -44,6 +45,7 @@ public class DetailsReservationFrame extends javax.swing.JFrame implements Windo
         
         showReservationDetails();
         
+        this.setTitle(Constants.EDIT_RESERVATION_FRAME_TITLE);
         this.setResizable(false);
         this.setVisible(true);
         this.setLocationRelativeTo(null);

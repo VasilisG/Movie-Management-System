@@ -36,7 +36,7 @@ public class MovieHandler {
         builder.append("(code, title, type, year, plot, actors, director, playtime, price, quantity) ");
         builder.append("VALUES");
         builder.append("( ");
-        builder.append(movie.getCode());
+        builder.append("\"" + movie.getCode() + "\"");
         builder.append(", ");
         builder.append("\"" + movie.getTitle() + "\"");
         builder.append(", ");

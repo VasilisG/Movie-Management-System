@@ -39,11 +39,11 @@ public class ReservationHandler {
        builder.append(" VALUES (");
        builder.append(reservation.getCustomer().getCode());
        builder.append(", ");
-       builder.append(reservation.getMovie().getCode());
+       builder.append("\"" + reservation.getMovie().getCode() + "\"");
        builder.append(", ");
-       builder.append(reservation.getStartDate());
+       builder.append("\"" + reservation.getStartDate() + "\"");
        builder.append(", ");
-       builder.append(reservation.getEndDate());
+       builder.append("\"" + reservation.getEndDate() + "\"");
        builder.append(", ");
        builder.append("\"" + reservation.getStatus() + "\"");
        builder.append(" );");
@@ -52,7 +52,7 @@ public class ReservationHandler {
             PreparedStatement preparedStatement = connection.prepareStatement(builder.toString());
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println("ERROR: Could not execute statement");
+            System.out.println(ex.getMessage());
         }
        
     }
