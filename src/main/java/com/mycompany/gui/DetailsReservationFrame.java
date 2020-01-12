@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -73,8 +74,8 @@ public class DetailsReservationFrame extends javax.swing.JFrame implements Windo
         customerFirstNameField.setText(customer.getFirstName());
         customerLastNameField.setText(customer.getLastName());
         
-        fromDateField.setText(this.reservation.getStartDate().toString());
-        toDateField.setText(this.reservation.getEndDate().toString());
+        fromDateField.setText(reservation.getFormattedStartDate());
+        toDateField.setText(reservation.getFormattedEndDate());
     }
     
     private void addListener(){

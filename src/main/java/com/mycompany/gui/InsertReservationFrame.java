@@ -224,16 +224,13 @@ public class InsertReservationFrame extends javax.swing.JFrame implements Window
                     updateMovieRow(movieIndex, movieTableModel, movie);
                     Reservation reservation = new Reservation(customer, movie, startDate, endDate, Constants.STATUS_ONGOING);
                     
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                    String formattedFromDate = simpleDateFormat.format(reservation.getStartDate());
-                    String formattedToDate = simpleDateFormat.format(reservation.getEndDate());
-                    
                     reservations.add(reservation);
                     reservationTableModel.addRow(new Object[]{false, reservation.getCustomer().getCode(),
                                                             reservation.getMovie().getCode(),
-                                                            formattedFromDate,
-                                                            formattedToDate,
+                                                            reservation.getFormattedStartDate(),
+                                                            reservation.getFormattedEndDate(),
                                                             Constants.ONGOING});
+                    
                     reservationHandler.insertRecord(reservation);
                     Status.showInfoMessage(Constants.RESERVATION_ADDED);
                     clearFields();

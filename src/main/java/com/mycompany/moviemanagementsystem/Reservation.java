@@ -5,6 +5,7 @@
  */
 package com.mycompany.moviemanagementsystem;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -18,6 +19,7 @@ public class Reservation {
     private Date startDate;
     private Date endDate;
     private int status;
+    private SimpleDateFormat simpleDateFormat;
     
     public Reservation(Customer customer, Movie movie, Date startDate, Date endDate, int status){
         this.customer = customer;
@@ -25,6 +27,7 @@ public class Reservation {
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
     
     public Customer getCustomer(){
@@ -39,8 +42,16 @@ public class Reservation {
         return startDate;
     }
     
+    public String getFormattedStartDate(){
+        return simpleDateFormat.format(this.getStartDate());
+    }
+    
     public Date getEndDate(){
         return endDate;
+    }
+    
+    public String getFormattedEndDate(){
+        return simpleDateFormat.format(this.getEndDate());
     }
     
     public int getStatus(){

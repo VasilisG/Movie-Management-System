@@ -41,9 +41,9 @@ public class ReservationHandler {
        builder.append(", ");
        builder.append("\"" + reservation.getMovie().getCode() + "\"");
        builder.append(", ");
-       builder.append("\"" + reservation.getStartDate() + "\"");
+       builder.append("\"" + reservation.getFormattedStartDate() + "\"");
        builder.append(", ");
-       builder.append("\"" + reservation.getEndDate() + "\"");
+       builder.append("\"" + reservation.getFormattedEndDate() + "\"");
        builder.append(", ");
        builder.append("\"" + reservation.getStatus() + "\"");
        builder.append(" );");
@@ -63,7 +63,7 @@ public class ReservationHandler {
         builder.append(Constants.RESERVATION_TABLE_NAME);
         builder.append("\n");
         builder.append("SET ");
-        builder.append("start_date=" + reservation.getStartDate() + ", ");
+        builder.append("start_date=" + reservation.getFormattedStartDate() + ", ");
         builder.append("status=" + reservation.getStatus() + ";");
         
         try {
