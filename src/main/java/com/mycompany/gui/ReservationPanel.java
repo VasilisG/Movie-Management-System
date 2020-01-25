@@ -129,17 +129,12 @@ public class ReservationPanel extends JPanel{
     }
     
     private void fillTable(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedFromDate = null;
-        String formattedToDate = null;
         for(Reservation reservation : reservations){
-            formattedFromDate = simpleDateFormat.format(reservation.getStartDate());
-            formattedToDate = simpleDateFormat.format(reservation.getEndDate());
             reservationTableModel.addRow(new Object[]{false, 
                 reservation.getCustomer().getCode(),
                 reservation.getMovie().getCode(),
-                formattedFromDate,
-                formattedToDate,
+                reservation.getFormattedStartDate(),
+                reservation.getFormattedEndDate(),
                 reservation.getStatusString()});
         }
     }

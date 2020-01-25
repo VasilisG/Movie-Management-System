@@ -61,7 +61,7 @@ public final class Constants {
     public static final String[] MOVIE_TABLE_COLUMNS = {"SELECTED", "CODE", "TITLE", "PRICE", "QUANTITY"}; 
     public static final String[] CUSTOMER_TABLE_COLUMNS = {"SELECTED", "CODE", "FIRST NAME", "LAST NAME", "ADDRESS", "PHONE NUMBER", "MEMBER"};
     public static final String[] RESERVATION_TABLE_COLUMNS = {"SELECTED", "CUSTOMER CODE", "MOVIE CODE", "FROM", "TO", "STATUS"};
-    public static final String[] TRANSACTION_TABLE_COLUMNS = {"SELECTED", "TRANSACTION DATE", "CUSTOMER CODE", "MOVIE CODE"};
+    public static final String[] TRANSACTION_TABLE_COLUMNS = {"TRANSACTION DATE", "CUSTOMER CODE", "MOVIE CODE"};
     
     public static final String SELECT_TYPE = "- Select movie type -";
     public static final String ACTION = "Action";

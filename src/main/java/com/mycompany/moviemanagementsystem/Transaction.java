@@ -18,6 +18,7 @@ public class Transaction {
     private String formattedDate;
     private Customer customer;
     private Movie movie;
+    private SimpleDateFormat simpleDateFormat;
     
     public Transaction(Customer customer, Movie movie, Date transactionDate){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -25,14 +26,15 @@ public class Transaction {
         this.formattedDate = simpleDateFormat.format(transactionDate);
         this.customer = customer;
         this.movie = movie;
+        this.simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
         
     public Date getDate(){
         return transactionDate;
     }
     
-    public String getFormattedDate(){
-        return this.formattedDate;
+     public String getFormattedDate(){
+        return simpleDateFormat.format(this.getDate());
     }
     
     public Customer getCustomer(){

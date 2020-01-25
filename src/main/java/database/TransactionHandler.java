@@ -38,7 +38,7 @@ public class TransactionHandler {
         builder.append(" VALUES (");
         builder.append("\"" + transaction.getMovie().getCode() + "\"" + ", ");
         builder.append("\"" + transaction.getCustomer().getCode() + "\"" + ", ");
-        builder.append("\"" + transaction.getDate() + "\"" + ")");
+        builder.append("\"" + transaction.getFormattedDate() + "\"" + ")");
         
         try {
             Statement statement = connection.createStatement();
@@ -55,7 +55,7 @@ public class TransactionHandler {
         builder.append("SET ");
         builder.append("movie_code=" + "\"" + transaction.getMovie().getCode() + "\"" + ", ");
         builder.append("customer_code=" + "\"" + transaction.getCustomer().getCode() + "\"" + ", ");
-        builder.append("date=" + "\"" + transaction.getDate() + "\"" + ";");
+        builder.append("date=" + "\"" + transaction.getFormattedDate() + "\"" + ";");
         
         try {
             Statement statement = connection.createStatement();

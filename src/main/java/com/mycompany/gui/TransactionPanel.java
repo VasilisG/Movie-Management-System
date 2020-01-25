@@ -75,6 +75,7 @@ public class TransactionPanel extends JPanel{
     private void initComponents(){
         initPanels();
         initTable();
+        fillTable();
         initButtons();
     }
     
@@ -129,6 +130,16 @@ public class TransactionPanel extends JPanel{
         transactionTableModel.setColumnIdentifiers(Constants.TRANSACTION_TABLE_COLUMNS);
         
         transactionTable.setModel(transactionTableModel);
+    }
+    
+    private void fillTable(){
+        for(Transaction transaction : transactions){
+            transactionTableModel.addRow(new Object[] {
+                transaction.getFormattedDate(),
+                transaction.getCustomer().getCode(),
+                transaction.getMovie().getCode()
+            });
+        }
     }
     
     private void bindTable(){
