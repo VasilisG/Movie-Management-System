@@ -284,7 +284,7 @@ public class ReservationPanel extends JPanel{
     }
     
     private String formattedDate(Date date){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String formattedFromDate = simpleDateFormat.format(date);
         return formattedFromDate;
     }
@@ -326,22 +326,35 @@ public class ReservationPanel extends JPanel{
                             int confirmCancel = Status.showConfirmMessage(Constants.CANCEL_RESERVATIONS);
                             if(confirmCancel == JOptionPane.YES_OPTION){
                                 Reservation reservation = reservations.get(selectedIndex);
-                                String movieCode = reservation.getMovie().getCode();
-                                int movieIndex = getMovieByCode(movieCode);
-                                Movie movie = movies.get(movieIndex);
-                                movie.setQuantity(movie.getQuantity()+1);
-                                updateRow(movieIndex, movieTableModel, movie);
-                                updateReservationRow(selectedIndex, reservationTableModel, reservation, Constants.CANCELED);
-                                reservation.setStatus(Constants.STATUS_CANCELED);
-                                reservationHandler.updateRecord(reservation);
+                                if(reservation.getStatusString().equals(Constants.COMPLETED)){
+                                    Status.showErrorMessage(Constants.RESERVATIONS_NOT_COMPLETED);
+                                }
+                                else{
+                                    String movieCode = reservation.getMovie().getCode();
+                                    int movieIndex = getMovieByCode(movieCode);
+                                    Movie movie = movies.get(movieIndex);
+                                    movie.setQuantity(movie.getQuantity()+1);
+                                    updateRow(movieIndex, movieTableModel, movie);
+                                    updateReservationRow(selectedIndex, reservationTableModel, reservation, Constants.CANCELED);
+                                    reservation.setStatus(Constants.STATUS_CANCELED);
+                                    reservationHandler.updateRecord(reservation);
+                                    
+                                    Status.showInfoMessage(Constants.RESERVATIONS_COMPLETED);
+                                }
+                                
                             }
                         }
                     }
                     else{
                         int confirmCancel = Status.showConfirmMessage(Constants.CANCEL_RESERVATIONS);
+                        int failedToComplete = 0;
                         if(confirmCancel == JOptionPane.YES_OPTION){
                           for(Integer index : indices){
                             Reservation reservation = reservations.get(index);
+                            if(reservation.getStatusString().equals(Constants.COMPLETED)){
+                                failedToComplete++;
+                                continue;
+                            }
                             String movieCode = reservation.getMovie().getCode();
                             int movieIndex = getMovieByCode(movieCode);
                             Movie movie = movies.get(movieIndex);
@@ -351,7 +364,10 @@ public class ReservationPanel extends JPanel{
                             reservation.setStatus(Constants.STATUS_CANCELED);
                             reservationHandler.updateRecord(reservation);
                           }  
-                        } 
+                        }
+                        if(failedToComplete > 0){
+                            Status.showInfoMessage(Constants.RESERVATIONS_COULD_NOT_BE_CANCELLED + failedToComplete);
+                        }
                     }
                 }
             }
@@ -360,7 +376,12 @@ public class ReservationPanel extends JPanel{
                 if(confirmCancel == JOptionPane.YES_OPTION){
                     MovieTableModel movieTableModel = moviePanel.getMovieTableModel();
                     int currentReservationIndex = 0;
+                    int failedToComplete = 0;
                     for(Reservation reservation : reservations){
+                        if(reservation.getStatusString().equals(Constants.COMPLETED)){
+                            failedToComplete++;
+                            continue;
+                        }
                         String movieCode = reservation.getMovie().getCode();
                         int movieIndex = getMovieByCode(movieCode);
                         Movie movie = movies.get(movieIndex);
@@ -371,7 +392,10 @@ public class ReservationPanel extends JPanel{
                         reservationHandler.updateRecord(reservation);
                         currentReservationIndex++;
                     }
-                    Status.showInfoMessage(Constants.ALL_RESERVATIONS_CANCELED);
+                    if(failedToComplete > 0){
+                        Status.showInfoMessage(Constants.RESERVATIONS_COULD_NOT_BE_CANCELLED + failedToComplete);
+                    }
+                    else Status.showInfoMessage(Constants.ALL_RESERVATIONS_CANCELED);
                 }
             }
             if(source == detailsReservationButton){

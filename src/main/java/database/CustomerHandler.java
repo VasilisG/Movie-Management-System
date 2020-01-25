@@ -35,12 +35,12 @@ public class CustomerHandler{
         builder.append("(code,first_name,last_name,address,email,phone_number,member) ");
         builder.append("VALUES ");
         builder.append("( ");
-        builder.append(customer.getCode() + ", ");
+        builder.append( "\"" + customer.getCode() + "\"" + ", ");
         builder.append("\"" + customer.getFirstName() + "\"" + ", ");
         builder.append("\"" + customer.getLastName() + "\"" + ", ");
         builder.append("\"" + customer.getAddress() + "\"" + ", ");
-        builder.append("\"" +customer.getEmailAddress() + "\"" + ", ");
-        builder.append(customer.getPhoneNumber() + ", ");
+        builder.append("\"" + customer.getEmailAddress() + "\"" + ", ");
+        builder.append( "\"" + customer.getPhoneNumber() + "\"" + ", ");
         builder.append(customer.isMember());
         builder.append(" )");
         try {
