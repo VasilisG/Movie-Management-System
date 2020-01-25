@@ -376,10 +376,10 @@ public class ReservationPanel extends JPanel{
                 if(confirmCancel == JOptionPane.YES_OPTION){
                     MovieTableModel movieTableModel = moviePanel.getMovieTableModel();
                     int currentReservationIndex = 0;
-                    int failedToComplete = 0;
+                    int failedToCancel = 0;
                     for(Reservation reservation : reservations){
                         if(reservation.getStatusString().equals(Constants.COMPLETED)){
-                            failedToComplete++;
+                            failedToCancel++;
                             continue;
                         }
                         String movieCode = reservation.getMovie().getCode();
@@ -392,8 +392,8 @@ public class ReservationPanel extends JPanel{
                         reservationHandler.updateRecord(reservation);
                         currentReservationIndex++;
                     }
-                    if(failedToComplete > 0){
-                        Status.showInfoMessage(Constants.RESERVATIONS_COULD_NOT_BE_CANCELLED + failedToComplete);
+                    if(failedToCancel > 0){
+                        Status.showInfoMessage(Constants.RESERVATIONS_COULD_NOT_BE_CANCELLED + failedToCancel);
                     }
                     else Status.showInfoMessage(Constants.ALL_RESERVATIONS_CANCELED);
                 }
@@ -429,6 +429,9 @@ public class ReservationPanel extends JPanel{
                             Reservation reservation = reservations.get(selectedIndex);
                             if(reservation.getStatus() == Constants.STATUS_CANCELED){
                                 Status.showErrorMessage(Constants.RESERVATION_IS_CANCELED);
+                            }
+                            else if(reservation.getStatus() == Constants.STATUS_COMPLETED){
+                                Status.showErrorMessage(Constants.RESERVATIONS_COULD_NOT_BE_CANCELLED);
                             }
                             else{
                                 int confirmComplete = Status.showConfirmMessage(Constants.COMPLETE_RESERVATIONS);

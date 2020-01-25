@@ -149,6 +149,7 @@ public final class Constants {
     public static final String RESERVATIONS_NOT_COMPLETED = "Reservation(s) could not be completed.";
     public static final String ALL_RESERVATIONS_COMPLETED = "All reservations completed.";
     public static final String RESERVATION_IS_CANCELED = "Reservation is cancelled and cannot be modified.";
+    public static final String RESERVATION_IS_NOT_CANCELED = "Reservation could not be cancelled.";
     public static final String RESERVATIONS_COULD_NOT_BE_CANCELLED = "Some reservations could not be cancelled. Number: ";
     
     public static final String NO_TRANSACTIONS = "There are no transactions yet.";
