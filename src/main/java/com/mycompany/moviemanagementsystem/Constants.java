@@ -154,6 +154,7 @@ public final class Constants {
     public static final String RESERVATIONS_CANCELED = "Reservations canceled.";
     
     public static final String NO_TRANSACTIONS = "There are no transactions yet.";
+    public static final String TRANSACTIONS_SEARCH_FRAME_TITLE = "Search transaction";
     
     public static final int STATUS_ONGOING = 0;
     public static final int STATUS_DUE = 1;

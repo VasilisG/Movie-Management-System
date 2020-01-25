@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import validators.DateValidator;
 
@@ -58,6 +60,11 @@ public class SearchTransactionFrame extends javax.swing.JFrame implements Window
         
         setMainPanelButtonsEnabled(false);
         bindListenersToButtons();
+        
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+        this.setTitle(Constants.TRANSACTIONS_SEARCH_FRAME_TITLE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     
     private void bindListenersToButtons(){
