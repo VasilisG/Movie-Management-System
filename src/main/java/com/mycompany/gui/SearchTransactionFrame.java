@@ -148,14 +148,14 @@ public class SearchTransactionFrame extends javax.swing.JFrame implements Window
                 String customerCode = customerCodeField.getText();
                 String fromDateString = startDateField.getText();
                 String toDateString = endDateField.getText();
-                
+                                
                 if(movieCode.length() > 0){
                     transactionCriteria.add(new TransactionCriteriaMovie(movieCode));
                 }
                 if(customerCode.length() > 0){
                     transactionCriteria.add(new TransactionCriteriaCustomer(customerCode));
                 }
-                if(dateValidator.isValidDate(fromDateString) && dateValidator.isValidDate(toDateString)){
+                if(fromDateString.length() > 0 && toDateString.length() > 0 && dateValidator.isValidDate(fromDateString) && dateValidator.isValidDate(toDateString)){
                     if(fromDateString.length() > 0 && toDateString.length() > 0){
                         Date fromDate = getDateFromString(fromDateString);
                         Date toDate = getDateFromString(toDateString);
