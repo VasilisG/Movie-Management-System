@@ -85,14 +85,14 @@ public class ReservationPanel extends JPanel{
         initComponents();
         bindComponents();
         
-        movies = moviePanel.getMovies();
-        customers = customerPanel.getCustomers();
-        
         this.moviePanel = moviePanel;
         this.customerPanel = customerPanel;
         this.transactionPanel = transactionPanel;
         this.reservationHandler = reservationHandler;
         this.transactionHandler = transactionHandler;
+        
+        movies = moviePanel.getMovies();
+        customers = customerPanel.getCustomers();
     }
     
     private void initLayout(ArrayList<Reservation> reservations){

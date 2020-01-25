@@ -37,9 +37,9 @@ public class ReservationHandler {
        builder.append(Constants.RESERVATION_TABLE_NAME + " ");
        builder.append("(movie_code, customer_code, start_date, end_date, status)");
        builder.append(" VALUES (");
-       builder.append(reservation.getCustomer().getCode());
-       builder.append(", ");
        builder.append("\"" + reservation.getMovie().getCode() + "\"");
+       builder.append(", ");
+       builder.append("\"" + reservation.getCustomer().getCode() + "\"");
        builder.append(", ");
        builder.append("\"" + reservation.getFormattedStartDate() + "\"");
        builder.append(", ");
@@ -111,14 +111,18 @@ public class ReservationHandler {
             ResultSet resultSet = statement.executeQuery(Constants.SQL_RESERVATION_QUERY);
             while(resultSet.next()){
                 String movieCode = resultSet.getString("movie_code");
+                System.out.println("Movie code: " + movieCode);
                 String customerCode = resultSet.getString("customer_code");
+                System.out.println("Customer code: " + customerCode);
                 Date startDate = resultSet.getDate("start_date");
                 Date endDate = resultSet.getDate("end_date"); 
                 int status = resultSet.getInt("status");
                 status = getReservationStatus(endDate, status);
                 
                 Movie movie = getMovieByCode(movies, movieCode);
+                System.out.println(movie);
                 Customer customer = getCustomerByCode(customers, customerCode);
+                System.out.println(customer);
                 
                 Reservation reservation = new Reservation(customer, movie, startDate, endDate, status);
                 reservations.add(reservation);
@@ -149,6 +153,7 @@ public class ReservationHandler {
     
     private Movie getMovieByCode(ArrayList<Movie> movies, String movieCode){
         for(Movie movie : movies){
+            System.out.println("Movie code from list: " + movie.getCode());
             if(movie.getCode().equals(movieCode)){
                 return movie;
             }
