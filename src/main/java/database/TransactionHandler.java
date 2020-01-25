@@ -36,9 +36,9 @@ public class TransactionHandler {
         builder.append("INSERT INTO " + Constants.TRANSACTION_TABLE_NAME + " ");
         builder.append("(movie_code, customer_code, date)");
         builder.append(" VALUES (");
-        builder.append(transaction.getMovie().getCode() + ", ");
-        builder.append(transaction.getCustomer().getCode() + ", ");
-        builder.append(transaction.getDate() + ")");
+        builder.append("\"" + transaction.getMovie().getCode() + "\"" + ", ");
+        builder.append("\"" + transaction.getCustomer().getCode() + "\"" + ", ");
+        builder.append("\"" + transaction.getDate() + "\"" + ")");
         
         try {
             Statement statement = connection.createStatement();
@@ -53,9 +53,9 @@ public class TransactionHandler {
         StringBuilder builder = new StringBuilder();
         builder.append("UPDATE " + Constants.TRANSACTION_TABLE_NAME + "\n");
         builder.append("SET ");
-        builder.append("movie_code=" + transaction.getMovie().getCode() + ", ");
-        builder.append("customer_code=" + transaction.getCustomer().getCode() + ", ");
-        builder.append("date=" + transaction.getDate() + ";");
+        builder.append("movie_code=" + "\"" + transaction.getMovie().getCode() + "\"" + ", ");
+        builder.append("customer_code=" + "\"" + transaction.getCustomer().getCode() + "\"" + ", ");
+        builder.append("date=" + "\"" + transaction.getDate() + "\"" + ";");
         
         try {
             Statement statement = connection.createStatement();

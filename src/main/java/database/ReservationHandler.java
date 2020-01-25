@@ -63,11 +63,12 @@ public class ReservationHandler {
         builder.append(Constants.RESERVATION_TABLE_NAME);
         builder.append("\n");
         builder.append("SET ");
-        builder.append("status=" + reservation.getStatus() + ";");
-        builder.append("WHERE ");
+        builder.append("status=" + reservation.getStatus());
+        builder.append(" WHERE ");
         builder.append("movie_code=" + reservation.getMovie().getCode());
         builder.append(" AND ");
         builder.append("customer_code=" + reservation.getCustomer().getCode());
+        builder.append(";");
         
         try {
             Statement statement = connection.createStatement();

@@ -129,7 +129,7 @@ public class ReservationPanel extends JPanel{
     }
     
     private void fillTable(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String formattedFromDate = null;
         String formattedToDate = null;
         for(Reservation reservation : reservations){
@@ -327,7 +327,7 @@ public class ReservationPanel extends JPanel{
                             if(confirmCancel == JOptionPane.YES_OPTION){
                                 Reservation reservation = reservations.get(selectedIndex);
                                 if(reservation.getStatus() == Constants.STATUS_COMPLETED){
-                                    Status.showErrorMessage(Constants.RESERVATIONS_NOT_COMPLETED);
+                                    Status.showErrorMessage(Constants.RESERVATION_IS_NOT_CANCELED);
                                 }
                                 else{
                                     String movieCode = reservation.getMovie().getCode();
@@ -444,6 +444,7 @@ public class ReservationPanel extends JPanel{
                                     transaction = new Transaction(reservation.getCustomer(), reservation.getMovie(), currentDate);
                                     transactionPanel.addTransaction(transaction);
                                     transactionPanel.addTransactionToTable(transaction);
+                                    transactionHandler.insertRecord(transaction);
                                 } 
                             }
                             
@@ -465,6 +466,7 @@ public class ReservationPanel extends JPanel{
                                    transaction = new Transaction(reservation.getCustomer(), reservation.getMovie(), currentDate);
                                    transactionPanel.addTransaction(transaction);
                                    transactionPanel.addTransactionToTable(transaction);
+                                   transactionHandler.insertRecord(transaction);
                                 }  
                            }
                         }
@@ -494,6 +496,7 @@ public class ReservationPanel extends JPanel{
                                 transaction = new Transaction(reservation.getCustomer(), reservation.getMovie(), currentDate);
                                 transactionPanel.addTransaction(transaction);
                                 transactionPanel.addTransactionToTable(transaction);
+                                transactionHandler.insertRecord(transaction);
                             }
                             currentReservationIndex++;
                         }

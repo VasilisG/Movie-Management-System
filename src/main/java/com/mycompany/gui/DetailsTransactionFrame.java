@@ -62,18 +62,29 @@ public class DetailsTransactionFrame extends javax.swing.JFrame implements Windo
         Customer customer = transaction.getCustomer();
         Movie movie = transaction.getMovie();
         
-        customerFirstNameField.setText(customer.getFirstName());
-        customerLastNameField.setText(customer.getLastName());
-        customerAddressField.setText(customer.getAddress());
-        customerEmailAddressField.setText(customer.getEmailAddress());
-        customerPhoneField.setText(customer.getPhoneNumber());
-        customerCodeField.setText(customer.getCode());
-        
-        movieCodeField.setText(movie.getCode());
-        movieTitleField.setText(movie.getTitle());
-        
         DecimalFormat decimalFormat = new DecimalFormat( "#.##");
-        moviePriceField.setText(decimalFormat.format(movie.getPrice()));
+        
+        String customerFirstName = customer != null ? customer.getFirstName() : "-";
+        String customerLastName = customer != null ? customer.getLastName() : "-";
+        String customerAddress = customer != null ? customer.getAddress() : "-";
+        String customerEmailAddress = customer != null ? customer.getEmailAddress() : "-";
+        String customerPhoneNumber = customer != null ? customer.getPhoneNumber() : "-";
+        String customerCode = customer != null ? customer.getCode() : "-";
+        
+        String movieCode = movie != null ? movie.getCode() : "-";
+        String movieTitle = movie != null ? movie.getTitle() : "-";
+        String moviePrice = movie != null ? decimalFormat.format(movie.getPrice()) : "";
+        
+        customerFirstNameField.setText(customerFirstName);
+        customerLastNameField.setText(customerLastName);
+        customerAddressField.setText(customerAddress);
+        customerEmailAddressField.setText(customerEmailAddress);
+        customerPhoneField.setText(customerPhoneNumber);
+        customerCodeField.setText(customerCode);
+        
+        movieCodeField.setText(movieCode);
+        movieTitleField.setText(movieTitle);
+        moviePriceField.setText(moviePrice);
     }
 
     /**
