@@ -124,7 +124,7 @@ public final class Constants {
     public static final String CUSTOMER_TABLE_UPDATED = "Customer table updated.";
     
     public static final String CANNOT_INSERT_RESERVATION = "Cannot insert reservation. Both movie and customer tables must not be empty.";
-    public static final String CANNOT_EDIT_RESERVATION = "Reservations that are either cancelled or completed cannot be edited.";
+    public static final String CANNOT_EDIT_RESERVATION = "Reservations that are either canceled or completed cannot be edited.";
     public static final String INVALID_MOVIE_CODE = "Invalid movie code.";
     public static final String INVALID_CUSTOMER_CODE = "Invalid customer code.";
     public static final String INVALID_DAYS_TO_RENT = "Invalid days to rent.";
@@ -148,9 +148,10 @@ public final class Constants {
     public static final String RESERVATIONS_COMPLETED = "Reservation(s) completed.";
     public static final String RESERVATIONS_NOT_COMPLETED = "Reservation(s) could not be completed.";
     public static final String ALL_RESERVATIONS_COMPLETED = "All reservations completed.";
-    public static final String RESERVATION_IS_CANCELED = "Reservation is cancelled and cannot be modified.";
-    public static final String RESERVATION_IS_NOT_CANCELED = "Reservation could not be cancelled.";
-    public static final String RESERVATIONS_COULD_NOT_BE_CANCELLED = "Some reservations could not be cancelled. Number: ";
+    public static final String RESERVATION_IS_CANCELED = "Reservation is canceled and cannot be modified.";
+    public static final String RESERVATION_IS_NOT_CANCELED = "Reservation could not be canceled.";
+    public static final String RESERVATIONS_COULD_NOT_BE_CANCELLED = "Some reservations could not be canceled. Number: ";
+    public static final String RESERVATIONS_CANCELED = "Reservations canceled.";
     
     public static final String NO_TRANSACTIONS = "There are no transactions yet.";
     

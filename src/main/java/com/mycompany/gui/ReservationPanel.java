@@ -326,7 +326,7 @@ public class ReservationPanel extends JPanel{
                             int confirmCancel = Status.showConfirmMessage(Constants.CANCEL_RESERVATIONS);
                             if(confirmCancel == JOptionPane.YES_OPTION){
                                 Reservation reservation = reservations.get(selectedIndex);
-                                if(reservation.getStatusString().equals(Constants.COMPLETED)){
+                                if(reservation.getStatus() == Constants.STATUS_COMPLETED){
                                     Status.showErrorMessage(Constants.RESERVATIONS_NOT_COMPLETED);
                                 }
                                 else{
@@ -339,7 +339,7 @@ public class ReservationPanel extends JPanel{
                                     reservation.setStatus(Constants.STATUS_CANCELED);
                                     reservationHandler.updateRecord(reservation);
                                     
-                                    Status.showInfoMessage(Constants.RESERVATIONS_COMPLETED);
+                                    Status.showInfoMessage(Constants.RESERVATIONS_CANCELED);
                                 }
                                 
                             }
@@ -351,7 +351,7 @@ public class ReservationPanel extends JPanel{
                         if(confirmCancel == JOptionPane.YES_OPTION){
                           for(Integer index : indices){
                             Reservation reservation = reservations.get(index);
-                            if(reservation.getStatusString().equals(Constants.COMPLETED)){
+                            if(reservation.getStatus() == Constants.STATUS_COMPLETED){
                                 failedToComplete++;
                                 continue;
                             }
@@ -368,6 +368,7 @@ public class ReservationPanel extends JPanel{
                         if(failedToComplete > 0){
                             Status.showInfoMessage(Constants.RESERVATIONS_COULD_NOT_BE_CANCELLED + failedToComplete);
                         }
+                        else Status.showInfoMessage(Constants.RESERVATIONS_CANCELED);
                     }
                 }
             }
@@ -378,7 +379,7 @@ public class ReservationPanel extends JPanel{
                     int currentReservationIndex = 0;
                     int failedToCancel = 0;
                     for(Reservation reservation : reservations){
-                        if(reservation.getStatusString().equals(Constants.COMPLETED)){
+                        if(reservation.getStatus() == Constants.STATUS_COMPLETED){
                             failedToCancel++;
                             continue;
                         }
@@ -482,7 +483,7 @@ public class ReservationPanel extends JPanel{
                     if(confirmComplete == JOptionPane.YES_OPTION){
                         int currentReservationIndex = 0;
                         for(Reservation reservation : reservations){
-                            if(reservation.getStatus() == Constants.STATUS_CANCELED){
+                            if(reservation.getStatus() == Constants.STATUS_CANCELED || reservation.getStatus() == Constants.STATUS_COMPLETED){
                                 continue;
                             }
                             else{
