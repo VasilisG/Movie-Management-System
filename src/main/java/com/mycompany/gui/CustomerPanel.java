@@ -7,6 +7,7 @@ package com.mycompany.gui;
 
 import com.mycompany.moviemanagementsystem.Constants;
 import com.mycompany.moviemanagementsystem.Customer;
+import com.mycompany.moviemanagementsystem.Reservation;
 import com.mycompany.moviemanagementsystem.Status;
 import database.CustomerHandler;
 import java.awt.Component;
@@ -57,8 +58,10 @@ public class CustomerPanel extends JPanel{
     private ArrayList<Customer> filteredCustomers;
     private CustomerHandler customerHandler;
     
-    public CustomerPanel(ArrayList<Customer> customers, CustomerHandler customerHandler){
-        initLayout(customers, customerHandler);
+    private ArrayList<Reservation> reservations;
+    
+    public CustomerPanel(ArrayList<Customer> customers, ArrayList<Reservation> reservations, CustomerHandler customerHandler){
+        initLayout(customers, reservations, customerHandler);
         initComponents();
         bindComponents();
     }
@@ -67,9 +70,10 @@ public class CustomerPanel extends JPanel{
         return customers;
     }
     
-    private void initLayout(ArrayList<Customer> customers, CustomerHandler customerHandler){
+    private void initLayout(ArrayList<Customer> customers, ArrayList<Reservation> reservations, CustomerHandler customerHandler){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.customers = customers;
+        this.reservations = reservations;
         this.customerHandler = customerHandler;
         filteredCustomers = new ArrayList<>();
     }
@@ -212,6 +216,17 @@ public class CustomerPanel extends JPanel{
         buttonPanel.add(searchCustomerButton, constraints);
         buttonPanel.add(Box.createRigidArea(new Dimension(Constants.RIGID_AREA_WIDTH, Constants.RIGID_AREA_HEIGHT)));
         buttonPanel.add(dropFiltersButton, constraints);
+    }
+    
+    private boolean canDeleteCustomer(String customerCode, ArrayList<Reservation> reservations){
+        for(Reservation reservation : reservations){
+            String reservationCode = reservation.getCustomer().getCode();
+            int reservationStatus = reservation.getStatus();
+            if(customerCode.equals(reservationCode) && (reservationStatus != Constants.STATUS_COMPLETED || reservationStatus != Constants.STATUS_CANCELED)){
+                return false;
+            }
+        }
+        return true;
     }
     
     class ButtonListener implements ActionListener {
