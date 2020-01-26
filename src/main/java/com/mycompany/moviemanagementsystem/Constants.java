@@ -123,6 +123,8 @@ public final class Constants {
     public static final String CUSTOMER_ADDED = "Customer added.";
     public static final String CUSTOMER_TABLE_UPDATED = "Customer table updated.";
     
+    public static final String CANNOT_DELETE_MOVIE = "Movie cannot be deleted.";
+    
     public static final String CANNOT_INSERT_RESERVATION = "Cannot insert reservation. Both movie and customer tables must not be empty.";
     public static final String CANNOT_EDIT_RESERVATION = "Reservations that are either canceled or completed cannot be edited.";
     public static final String INVALID_MOVIE_CODE = "Invalid movie code.";

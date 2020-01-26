@@ -7,6 +7,7 @@ package com.mycompany.gui;
 
 import com.mycompany.moviemanagementsystem.Constants;
 import com.mycompany.moviemanagementsystem.Movie;
+import com.mycompany.moviemanagementsystem.Reservation;
 import com.mycompany.moviemanagementsystem.Status;
 import database.MovieHandler;
 import java.awt.Component;
@@ -45,6 +46,7 @@ public class MoviePanel extends JPanel {
     private JScrollPane scrollPane;
     private ArrayList<Movie> movies;
     private ArrayList<Movie> filteredMovies;
+    private ArrayList<Reservation> reservations;
     private MovieHandler movieHandler;
     
     private JPanel buttonPanel;
@@ -58,8 +60,8 @@ public class MoviePanel extends JPanel {
     private JButton dropFiltersButton;
     private ArrayList<JButton> buttonList;
     
-    public MoviePanel(ArrayList<Movie> movies, MovieHandler movieHandler){
-       initLayout(movies, movieHandler);
+    public MoviePanel(ArrayList<Movie> movies, ArrayList<Reservation> reservations, MovieHandler movieHandler){
+       initLayout(movies, reservations, movieHandler);
        initComponents();
        bindComponents();
        fillTable();
@@ -73,9 +75,10 @@ public class MoviePanel extends JPanel {
         return movieTableModel;
     }
     
-    private void initLayout(ArrayList<Movie> movies, MovieHandler movieHandler){
+    private void initLayout(ArrayList<Movie> movies, ArrayList<Reservation> reservations, MovieHandler movieHandler){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.movies = movies;
+        this.reservations = reservations;
         this.movieHandler = movieHandler;
         filteredMovies = new ArrayList<>();
     }
@@ -215,6 +218,17 @@ public class MoviePanel extends JPanel {
         buttonPanel.add(dropFiltersButton, constraints);
     }
     
+    private boolean canDeleteMovie(String movieCode, ArrayList<Reservation> reservations){
+        for(Reservation reservation : reservations){
+            String reservationCode = reservation.getMovie().getCode();
+            int reservationStatus = reservation.getStatus();
+            if(movieCode.equals(reservationCode) && (reservationStatus != Constants.STATUS_COMPLETED || reservationStatus != Constants.STATUS_CANCELED)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
     class ButtonListener implements ActionListener {
 
         @Override
@@ -238,10 +252,14 @@ public class MoviePanel extends JPanel {
                         int confirmDelete = Status.showConfirmMessage(Constants.CONFIRM_DELETION);
                         if(confirmDelete == JOptionPane.YES_OPTION){
                             Movie movie = movies.get(selectedIndex);
-                            movieHandler.deleteRecord(movie);
-                            movieTableModel.removeRow(selectedIndex);
-                            movies.remove(selectedIndex);
-                            Status.showInfoMessage(Constants.RECORD_DELETED);
+                            String movieCode = movie.getCode();
+                            if(canDeleteMovie(movieCode, reservations)){
+                                movieHandler.deleteRecord(movie);
+                                movieTableModel.removeRow(selectedIndex);
+                                movies.remove(selectedIndex);
+                                Status.showInfoMessage(Constants.RECORD_DELETED);
+                            }
+                            else Status.showErrorMessage(Constants.CANNOT_DELETE_MOVIE);
                         }
                     }
                     else Status.showErrorMessage(Constants.NO_RECORD_SELECTED);
@@ -252,8 +270,11 @@ public class MoviePanel extends JPanel {
                         Collections.reverse(indices);
                         for(Integer currentIndex : indices){
                             Movie movie = movies.get(currentIndex);
-                            movieHandler.deleteRecord(movie);
-                            movieTableModel.removeRow(currentIndex);
+                            String movieCode = movie.getCode();
+                            if(canDeleteMovie(movieCode, reservations)){
+                                movieHandler.deleteRecord(movie);
+                                movieTableModel.removeRow(currentIndex);
+                            }
                         }
                         ArrayList<Movie> tempMovies = new ArrayList<Movie>();
                         for(int i=0; i<movies.size(); i++){
