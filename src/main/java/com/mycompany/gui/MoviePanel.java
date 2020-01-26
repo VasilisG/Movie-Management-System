@@ -290,15 +290,39 @@ public class MoviePanel extends JPanel {
                 } 
            }
            if(source == deleteAllMoviesButton){
+               ArrayList<Integer> indices = new ArrayList<Integer>();
+               for(int i=0; i<movieTableModel.getRowCount(); i++){
+                    boolean selected = (boolean) movieTableModel.getValueAt(i, 0);
+                    if(selected){
+                        indices.add(i);
+                    }
+               }
+               int rows = indices.size();
+               
                int size = movies.size();
                int modelSize = movieTableModel.getRowCount();
                if(size > 0 && modelSize > 0){
                    int confirmDelete = Status.showConfirmMessage(Constants.CONFIRM_DELETION_ALL);
                    if(confirmDelete == JOptionPane.YES_OPTION){
-                       movieHandler.deleteAllRecords();
-                       movieTableModel.setRowCount(0);
-                       movies.clear();
-                       Status.showInfoMessage(Constants.DELETED + modelSize + Constants.RECORDS);
+                       Collections.reverse(indices);
+                        for(Integer currentIndex : indices){
+                            Movie movie = movies.get(currentIndex);
+                            String movieCode = movie.getCode();
+                            if(canDeleteMovie(movieCode, reservations)){
+                                movieHandler.deleteRecord(movie);
+                                movieTableModel.removeRow(currentIndex);
+                            }
+                        }
+                        ArrayList<Movie> tempMovies = new ArrayList<Movie>();
+                        for(int i=0; i<movies.size(); i++){
+                            if(indices.contains((Integer)i)){
+                                continue;
+                            }
+                            else tempMovies.add(movies.get(i));
+                        }
+                        movies = tempMovies;
+                        movieTable.getSelectionModel().setLeadSelectionIndex(-1);
+                        Status.showInfoMessage(Constants.DELETED + rows + Constants.RECORDS);
                    }
                }
                else Status.showInfoMessage(Constants.NO_RECORDS_TO_DELETE);
