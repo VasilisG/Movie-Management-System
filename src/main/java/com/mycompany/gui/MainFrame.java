@@ -71,6 +71,10 @@ public class MainFrame extends JFrame {
         
         connection = db.getConnection();
         
+        if(connection == null){
+            System.exit(0);
+        }
+        
         movieHandler = new MovieHandler(connection);
         customerHandler = new CustomerHandler(connection);
         reservationHandler = new ReservationHandler(connection);
