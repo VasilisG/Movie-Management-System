@@ -62,7 +62,7 @@ public class MainFrame extends JFrame {
         moviePanel = new MoviePanel(movies, reservations ,movieHandler);
         customerPanel = new CustomerPanel(customers, reservations, customerHandler);
         transactionPanel = new TransactionPanel(transactions);
-        reservationPanel = new ReservationPanel(reservations, moviePanel, customerPanel, transactionPanel, reservationHandler, transactionHandler);
+        reservationPanel = new ReservationPanel(reservations, moviePanel, customerPanel, transactionPanel, movieHandler, reservationHandler, transactionHandler);
     }
     
     private void initDatabase(){

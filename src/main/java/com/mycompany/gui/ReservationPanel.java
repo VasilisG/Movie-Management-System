@@ -12,6 +12,7 @@ import com.mycompany.moviemanagementsystem.Movie;
 import com.mycompany.moviemanagementsystem.Reservation;
 import com.mycompany.moviemanagementsystem.Status;
 import com.mycompany.moviemanagementsystem.Transaction;
+import database.MovieHandler;
 import database.ReservationHandler;
 import database.TransactionHandler;
 import java.awt.Component;
@@ -72,13 +73,16 @@ public class ReservationPanel extends JPanel{
     
     private ArrayList<Reservation> reservations;
     private ArrayList<Reservation> filteredReservations;
+    
+    private MovieHandler movieHandler;
     private ReservationHandler reservationHandler;
     private TransactionHandler transactionHandler;
     
     public ReservationPanel(ArrayList<Reservation> reservations, 
             MoviePanel moviePanel, 
             CustomerPanel customerPanel, 
-            TransactionPanel transactionPanel, 
+            TransactionPanel transactionPanel,
+            MovieHandler movieHandler,
             ReservationHandler reservationHandler,
             TransactionHandler transactionHandler){
         initLayout(reservations);
@@ -88,6 +92,8 @@ public class ReservationPanel extends JPanel{
         this.moviePanel = moviePanel;
         this.customerPanel = customerPanel;
         this.transactionPanel = transactionPanel;
+        
+        this.movieHandler = movieHandler;
         this.reservationHandler = reservationHandler;
         this.transactionHandler = transactionHandler;
         
@@ -297,7 +303,7 @@ public class ReservationPanel extends JPanel{
             Object source = event.getSource();
             if(source == insertReservationButton){
                 if(canInsert(movies, customers)){
-                    new InsertReservationFrame(buttonList, movies, customers, reservations, moviePanel.getMovieTableModel(), reservationTableModel, reservationHandler);
+                    new InsertReservationFrame(buttonList, movies, customers, reservations, moviePanel.getMovieTableModel(), reservationTableModel, reservationHandler, movieHandler);
                 }
                 else Status.showErrorMessage(Constants.CANNOT_INSERT_RESERVATION);
             }
@@ -332,6 +338,7 @@ public class ReservationPanel extends JPanel{
                                     updateRow(movieIndex, movieTableModel, movie);
                                     updateReservationRow(selectedIndex, reservationTableModel, reservation, Constants.CANCELED);
                                     reservation.setStatus(Constants.STATUS_CANCELED);
+                                    movieHandler.updateRecord(movie);
                                     reservationHandler.updateRecord(reservation);
                                     
                                     Status.showInfoMessage(Constants.RESERVATIONS_CANCELED);
@@ -357,6 +364,7 @@ public class ReservationPanel extends JPanel{
                             updateRow(movieIndex, movieTableModel, movie);
                             updateReservationRow(index, reservationTableModel, reservation, Constants.CANCELED);
                             reservation.setStatus(Constants.STATUS_CANCELED);
+                            movieHandler.updateRecord(movie);
                             reservationHandler.updateRecord(reservation);
                           }  
                         }
@@ -385,6 +393,7 @@ public class ReservationPanel extends JPanel{
                         updateRow(movieIndex, movieTableModel, movie);
                         updateReservationRow(currentReservationIndex, reservationTableModel, reservation, Constants.CANCELED);
                         reservation.setStatus(Constants.STATUS_CANCELED);
+                        movieHandler.updateRecord(movie);
                         reservationHandler.updateRecord(reservation);
                         currentReservationIndex++;
                     }
