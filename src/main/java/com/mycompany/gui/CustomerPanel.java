@@ -252,10 +252,14 @@ public class CustomerPanel extends JPanel{
                         int confirmDelete = Status.showConfirmMessage(Constants.CONFIRM_DELETION);
                         if(confirmDelete == JOptionPane.YES_OPTION){
                             Customer customer = customers.get(selectedIndex);
-                            customerTableModel.removeRow(selectedIndex);
-                            customers.remove(selectedIndex);
-                            customerHandler.deleteRecord(customer);
-                            Status.showInfoMessage(Constants.RECORD_DELETED);
+                            if(canDeleteCustomer(customer.getCode(), reservations)){
+                                customerTableModel.removeRow(selectedIndex);
+                                customers.remove(selectedIndex);
+                                customerHandler.deleteRecord(customer);
+                                Status.showInfoMessage(Constants.RECORD_DELETED);
+                            }
+                            else Status.showErrorMessage(Constants.CANNOT_DELETE_CUSTOMER);
+                            
                         }
                     }
                     else Status.showErrorMessage(Constants.NO_RECORD_SELECTED);
@@ -274,8 +278,10 @@ public class CustomerPanel extends JPanel{
                             }
                             else {
                                 Customer customer = customers.get(i);
-                                tempCustomers.add(customer);
-                                customerHandler.deleteRecord(customer);
+                                if(canDeleteCustomer(customer.getCode(), reservations)){
+                                    tempCustomers.add(customer);
+                                    customerHandler.deleteRecord(customer);
+                                }
                             }
                         }
                         customers = tempCustomers;
@@ -289,10 +295,19 @@ public class CustomerPanel extends JPanel{
                int modelSize = customerTableModel.getRowCount();
                if(size > 0 && modelSize > 0){
                    int confirmDelete = Status.showConfirmMessage(Constants.CONFIRM_DELETION_ALL);
+                   modelSize = 0;
                    if(confirmDelete == JOptionPane.YES_OPTION){
-                       customerTableModel.setRowCount(0);
-                       customers.clear();
-                       customerHandler.deleteAllRecords();
+                       ArrayList<Customer> tempCustomers = new ArrayList<Customer>();
+                       for(int i=0; i<customers.size(); i++){
+                           Customer customer = customers.get(i);
+                           if(canDeleteCustomer(customer.getCode(), reservations)){
+                               tempCustomers.add(customer);
+                               customerHandler.deleteRecord(customer);
+                               modelSize++;
+                           }
+                       }
+                       customers = tempCustomers;
+                       customerTable.getSelectionModel().setLeadSelectionIndex(-1);
                        Status.showInfoMessage(Constants.DELETED + modelSize + Constants.RECORDS);
                    }
                }

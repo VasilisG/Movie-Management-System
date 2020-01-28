@@ -165,7 +165,7 @@ public class MoviePanel extends JPanel {
         
         setSizeToButtons(Constants.BUTTON_WIDTH, Constants.BUTTON_HEIGHT);
         
-        buttonList = new ArrayList<JButton>();
+        buttonList = new ArrayList<>();
         
         buttonList.add(insertMovieButton);
         buttonList.add(deleteMovieButton);
@@ -266,6 +266,7 @@ public class MoviePanel extends JPanel {
                 }   
                 else {
                     int confirmDelete = Status.showConfirmMessage(Constants.CONFIRM_DELETION);
+                    rows = 0;
                     if(confirmDelete == JOptionPane.YES_OPTION){
                         Collections.reverse(indices);
                         for(Integer currentIndex : indices){
@@ -274,6 +275,7 @@ public class MoviePanel extends JPanel {
                             if(canDeleteMovie(movieCode, reservations)){
                                 movieHandler.deleteRecord(movie);
                                 movieTableModel.removeRow(currentIndex);
+                                rows++;
                             }
                         }
                         ArrayList<Movie> tempMovies = new ArrayList<Movie>();
