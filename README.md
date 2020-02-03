@@ -22,3 +22,27 @@ This is a simple movie management system made in Java. The system's features inc
 ### Transactions
 
 - View / Search all transactions in your database.
+
+## System screenshots
+
+### Movies
+
+![Screenshot 1](screenshots/Movie_management_system.png)
+![Screenshot 2](screenshots/Movie_management_system_2.png)
+![Screenshot 3](screenshots/Movie_management_system_3.png)
+![Screenshot 4](screenshots/Movie_management_system_4.png)
+
+### Customers
+
+![Screenshot 5](screenshots/Movie_management_system_5.png)
+![Screenshot 6](screenshots/Movie_management_system_6.png)
+![Screenshot 7](screenshots/Movie_management_system_7.png)
+
+### Reservations
+
+![Screenshot 8](screenshots/Movie_management_system_8.png)
+
+### Transactions
+
+![Screenshot 9](screenshots/Movie_management_system_9.png)
+![Screenshot 10](screenshots/Movie_management_system_10.png)
