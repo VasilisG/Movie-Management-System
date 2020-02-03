@@ -193,7 +193,6 @@ public class TransactionPanel extends JPanel{
     
     public void addTransactionToTable(Transaction transaction){
         transactionTableModel.addRow(new Object[]{
-            false,
             transaction.getFormattedDate(),
             transaction.getCustomer().getCode(),
             transaction.getMovie().getCode()
