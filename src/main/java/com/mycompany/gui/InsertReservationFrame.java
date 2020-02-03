@@ -235,7 +235,7 @@ public class InsertReservationFrame extends javax.swing.JFrame implements Window
                                                             reservation.getFormattedEndDate(),
                                                             Constants.ONGOING});
                     
-                    movieHandler.insertRecord(movie);
+                    movieHandler.updateRecord(movie);
                     reservationHandler.insertRecord(reservation);
                     Status.showInfoMessage(Constants.RESERVATION_ADDED);
                     clearFields();
