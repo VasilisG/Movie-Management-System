@@ -23,7 +23,7 @@ This is a simple movie management system made in Java. The system's features inc
 
 - View / Search all transactions in your database.
 
-### System requirements
+## System requirements
 
 In order to run the above application you need to have:
 
