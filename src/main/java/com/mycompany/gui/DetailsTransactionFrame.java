@@ -312,7 +312,9 @@ public class DetailsTransactionFrame extends javax.swing.JFrame implements Windo
     public void windowOpened(WindowEvent e) {}
 
     @Override
-    public void windowClosing(WindowEvent e) {}
+    public void windowClosing(WindowEvent e) {
+        setMainPanelButtonsEnabled(true);
+    }
 
     @Override
     public void windowClosed(WindowEvent e) {}
