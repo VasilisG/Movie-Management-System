@@ -23,6 +23,13 @@ This is a simple movie management system made in Java. The system's features inc
 
 - View / Search all transactions in your database.
 
+### System requirements
+
+In order to run the above application you need to have:
+
+- Java JDK 1.8 or above.
+- MySQL 5.7 or above installed and running.
+
 ## System screenshots
 
 ### Movies
