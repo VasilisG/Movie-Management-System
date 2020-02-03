@@ -27,8 +27,8 @@ This is a simple movie management system made in Java. The system's features inc
 
 In order to run the above application you need to have:
 
-- Java JDK 1.8 or above.
-- MySQL 5.7 or above installed and running.
+- **Java JDK 1.8** or above.
+- **MySQL 5.7** or above installed and running.
 
 ## System screenshots
 
